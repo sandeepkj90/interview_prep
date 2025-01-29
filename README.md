@@ -1,13 +1,3 @@
-<html>
-  <head>
-    <style>
-      body {
-        font-size: 20px;
-      }
-    </style>
-  </head>
-</html>
-
 ## Understanding `useState` in React.js (Basic to Advanced)
 
 React’s `useState` hook is fundamental for managing component state in functional components. It allows you to store, update, and manage local component states effectively.

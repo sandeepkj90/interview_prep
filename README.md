@@ -892,3 +892,7 @@ Here’s an extensive list of **scenario-based practical questions** focused on 
 
 40. **Offline Support:**
     - Allow CRUD operations to work offline. Sync changes with the backend when the app reconnects to the internet.
+
+---
+
+Would you like detailed implementations or code examples for any of these scenarios?

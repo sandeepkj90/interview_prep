@@ -1,416 +1,128 @@
-# **`process.nextTick()` vs `setImmediate()` in Node.js**
-
-Both `process.nextTick()` and `setImmediate()` allow scheduling asynchronous tasks, but they behave differently in the **Node.js Event Loop**.
+In Node.js (or any web-based application using HTTP), status codes are derived from the HTTP protocol. Here’s a detailed list of all HTTP status codes categorized by their type:
 
 ---
 
-# **1. What is `process.nextTick()`?**
+## **1xx - Informational Responses**
 
-✅ **`process.nextTick()` schedules a microtask to execute immediately after the current operation completes, before moving to the next phase of the event loop.**
+These indicate that the request has been received and is being processed.
 
-### **Key Characteristics:**
-
-- Executes **before** any I/O callbacks, timers, or `setImmediate()`.
-- Runs **before** Promises (`Promise.then()`).
-- Can **block the event loop** if used excessively.
+- **100 Continue** – The server received the initial request and the client should continue sending the rest.
+- **101 Switching Protocols** – The server is switching protocols as requested by the client.
+- **102 Processing** – The request is being processed, but no response is available yet (WebDAV).
+- **103 Early Hints** – The server sends preliminary headers to improve performance.
 
 ---
 
-## **Example of `process.nextTick()`**
+## **2xx - Success Responses**
 
-```js
-console.log("1. Start");
+These indicate that the request was successfully received, understood, and accepted.
 
-process.nextTick(() => {
-	console.log("2. process.nextTick callback");
+- **200 OK** – The request was successful.
+- **201 Created** – A new resource has been created as a result of the request.
+- **202 Accepted** – The request has been received but is still being processed.
+- **203 Non-Authoritative Information** – The response is modified from a third-party source.
+- **204 No Content** – The request was successful, but there is no response body.
+- **205 Reset Content** – Instructs the client to reset its document view.
+- **206 Partial Content** – Partial content is returned (used for range requests).
+- **207 Multi-Status** – Multiple status codes are sent for different operations (WebDAV).
+- **208 Already Reported** – A resource has already been reported in this request (WebDAV).
+- **226 IM Used** – The server completed the request using instance manipulations.
+
+---
+
+## **3xx - Redirection Responses**
+
+These indicate that the client must take additional action to complete the request.
+
+- **300 Multiple Choices** – Multiple options are available for the requested resource.
+- **301 Moved Permanently** – The requested resource has been permanently moved.
+- **302 Found** – The resource is temporarily moved to a different URL.
+- **303 See Other** – Redirects to a different resource, often used after a POST request.
+- **304 Not Modified** – The resource has not been modified, so the cached version is used.
+- **305 Use Proxy (Deprecated)** – The resource must be accessed through a proxy.
+- **306 Unused (Reserved)** – This status code was used in previous versions but is no longer active.
+- **307 Temporary Redirect** – The requested resource is temporarily redirected.
+- **308 Permanent Redirect** – The resource is permanently moved but should use the same HTTP method.
+
+---
+
+## **4xx - Client Error Responses**
+
+These indicate that the client made an error in the request.
+
+- **400 Bad Request** – The request is malformed or contains invalid parameters.
+- **401 Unauthorized** – Authentication is required but missing or incorrect.
+- **402 Payment Required** – Reserved for future use (often seen in API rate-limiting cases).
+- **403 Forbidden** – The client does not have permission to access the resource.
+- **404 Not Found** – The requested resource does not exist.
+- **405 Method Not Allowed** – The HTTP method used is not allowed for this resource.
+- **406 Not Acceptable** – The server cannot return a response that meets the client’s requirements.
+- **407 Proxy Authentication Required** – The client must authenticate with a proxy before making the request.
+- **408 Request Timeout** – The server timed out waiting for the client’s request.
+- **409 Conflict** – The request conflicts with the current state of the resource.
+- **410 Gone** – The resource was previously available but is no longer available.
+- **411 Length Required** – The request must include a valid `Content-Length` header.
+- **412 Precondition Failed** – The client’s preconditions in headers failed.
+- **413 Payload Too Large** – The request body is too large for the server to process.
+- **414 URI Too Long** – The requested URL is too long.
+- **415 Unsupported Media Type** – The media type of the request is unsupported.
+- **416 Range Not Satisfiable** – The requested range is invalid.
+- **417 Expectation Failed** – The expectation given in the request cannot be met.
+- **418 I'm a Teapot** – A joke response from the 1998 April Fools’ RFC (RFC 2324).
+- **421 Misdirected Request** – The request was sent to a server that cannot handle it.
+- **422 Unprocessable Entity** – The request is well-formed but cannot be processed (WebDAV).
+- **423 Locked** – The requested resource is locked (WebDAV).
+- **424 Failed Dependency** – A dependent request failed (WebDAV).
+- **425 Too Early** – The server is unwilling to process a request that might be replayed.
+- **426 Upgrade Required** – The client must upgrade to a different protocol.
+- **428 Precondition Required** – The server requires the request to have preconditions.
+- **429 Too Many Requests** – The client has sent too many requests in a short time (rate-limiting).
+- **431 Request Header Fields Too Large** – The request headers are too large for the server to process.
+- **451 Unavailable For Legal Reasons** – The requested resource is unavailable due to legal restrictions.
+
+---
+
+## **5xx - Server Error Responses**
+
+These indicate that the server encountered an error while processing the request.
+
+- **500 Internal Server Error** – A generic error occurred on the server.
+- **501 Not Implemented** – The server does not support the requested functionality.
+- **502 Bad Gateway** – The server received an invalid response from an upstream server.
+- **503 Service Unavailable** – The server is temporarily unable to handle the request.
+- **504 Gateway Timeout** – The server did not receive a timely response from an upstream server.
+- **505 HTTP Version Not Supported** – The requested HTTP version is not supported.
+- **506 Variant Also Negotiates** – A server misconfiguration causes a circular reference.
+- **507 Insufficient Storage** – The server has insufficient storage space to complete the request.
+- **508 Loop Detected** – The server detected an infinite loop while processing the request.
+- **510 Not Extended** – Additional extensions to the request are required.
+- **511 Network Authentication Required** – The client must authenticate to gain network access.
+
+---
+
+## **How to Use HTTP Status Codes in Node.js**
+
+In Node.js, status codes are typically used in responses when working with frameworks like **Express.js**:
+
+```javascript
+const express = require("express");
+const app = express();
+
+app.get("/", (req, res) => {
+	res.status(200).send("OK");
 });
 
-console.log("3. End");
-```
-
-### **Output:**
-
-```
-1. Start
-3. End
-2. process.nextTick callback
-```
-
-### **Execution Breakdown:**
-
-1️⃣ `console.log("1. Start");` (**Synchronous Code**)  
-2️⃣ `console.log("3. End");` (**Synchronous Code**)  
-3️⃣ `process.nextTick()` executes **before any I/O or timers**
-
----
-
-# **2. What is `setImmediate()`?**
-
-✅ **`setImmediate()` schedules a macrotask to run in the next iteration of the event loop, after I/O callbacks but before timers (`setTimeout`).**
-
-### **Key Characteristics:**
-
-- Executes **after** all pending I/O operations.
-- Executes **before** `setTimeout(fn, 0)`.
-- Does not block the event loop.
-
----
-
-## **Example of `setImmediate()`**
-
-```js
-console.log("1. Start");
-
-setImmediate(() => {
-	console.log("2. setImmediate callback");
+app.get("/not-found", (req, res) => {
+	res.status(404).send("Not Found");
 });
 
-console.log("3. End");
-```
-
-### **Output:**
-
-```
-1. Start
-3. End
-2. setImmediate callback
-```
-
-### **Execution Breakdown:**
-
-1️⃣ `console.log("1. Start");` (**Synchronous Code**)  
-2️⃣ `console.log("3. End");` (**Synchronous Code**)  
-3️⃣ `setImmediate()` executes **after synchronous code finishes**
-
----
-
-# **3. `process.nextTick()` vs `setImmediate()` in a Single Example**
-
-```js
-console.log("1. Start");
-
-process.nextTick(() => {
-	console.log("2. process.nextTick callback");
+app.get("/server-error", (req, res) => {
+	res.status(500).send("Internal Server Error");
 });
 
-setImmediate(() => {
-	console.log("3. setImmediate callback");
-});
-
-console.log("4. End");
-```
-
-### **Output:**
-
-```
-1. Start
-4. End
-2. process.nextTick callback
-3. setImmediate callback
-```
-
-### **Execution Order Explanation:**
-
-1️⃣ `console.log("1. Start");` (**Synchronous Code**)  
-2️⃣ `console.log("4. End");` (**Synchronous Code**)  
-3️⃣ `process.nextTick()` executes **before `setImmediate()`**  
-4️⃣ `setImmediate()` executes **in the next event loop cycle**
-
----
-
-# **4. How `setImmediate()` Works with I/O Operations**
-
-`setImmediate()` executes **right after I/O operations**, making it useful for scheduling tasks that should run after file reading or networking.
-
-```js
-const fs = require("fs");
-
-fs.readFile(__filename, () => {
-	console.log("1. File read complete");
-
-	setImmediate(() => {
-		console.log("2. setImmediate callback");
-	});
-
-	process.nextTick(() => {
-		console.log("3. process.nextTick callback");
-	});
+app.listen(3000, () => {
+	console.log("Server is running on port 3000");
 });
 ```
 
-### **Possible Output:**
-
-```
-1. File read complete
-3. process.nextTick callback
-2. setImmediate callback
-```
-
-### **Explanation:**
-
-- The I/O operation (`fs.readFile`) finishes, and its callback runs.
-- **Inside the callback:**
-  1. `process.nextTick()` runs **immediately** (microtask).
-  2. `setImmediate()` runs **after** (`macrotask`).
-
----
-
-# **5. When to Use `process.nextTick()` vs. `setImmediate()`**
-
-| Feature        | `process.nextTick()`                   | `setImmediate()`                |
-| -------------- | -------------------------------------- | ------------------------------- |
-| Type           | **Microtask**                          | **Macrotask**                   |
-| Execution Time | **Before I/O and timers**              | **After I/O but before timers** |
-| Priority       | **Higher (runs before anything else)** | **Lower (runs after I/O)**      |
-| Use Case       | Small quick updates                    | Scheduling after I/O            |
-
----
-
-# **6. `setTimeout(fn, 0)` vs. `setImmediate()`**
-
-Both `setTimeout(fn, 0)` and `setImmediate()` are **macrotasks**, but their execution order can vary.
-
-```js
-setTimeout(() => {
-	console.log("setTimeout callback");
-}, 0);
-
-setImmediate(() => {
-	console.log("setImmediate callback");
-});
-```
-
-### **Possible Output:**
-
-```
-setImmediate callback
-setTimeout callback
-```
-
-OR
-
-```
-setTimeout callback
-setImmediate callback
-```
-
-- `setImmediate()` is **faster in I/O callbacks**.
-- If no I/O is present, `setTimeout(fn, 0)` might run first.
-
----
-
-# **7. Summary**
-
-✅ **Use `process.nextTick()` for high-priority tasks that need to run immediately after the current operation.**  
-✅ **Use `setImmediate()` to schedule execution after I/O tasks.**
-
-Would you like a **real-world example** where these concepts are applied? 🚀
-
-## Explain the microtask and macrotask in nodejs
-
-# **Microtask vs Macrotask in Node.js**
-
-In Node.js, the **Event Loop** manages the execution of asynchronous code by handling different types of tasks in **two queues**:
-
-1. **Microtask Queue** (Higher priority)
-2. **Macrotask Queue** (Lower priority)
-
-These queues determine the order in which asynchronous operations execute in an **event-driven** manner.
-
----
-
-## **1. What is a Microtask?**
-
-Microtasks are high-priority tasks that execute **immediately after the current JavaScript execution completes**, before the next event loop iteration.
-
-### **Examples of Microtasks in Node.js**
-
-✅ **`process.nextTick()`**  
-✅ **`Promise.then() / Promise.catch() / Promise.finally()`**  
-✅ **`queueMicrotask()`**
-
----
-
-## **2. What is a Macrotask?**
-
-Macrotasks are lower-priority tasks that execute **in the next event loop cycle**, after all microtasks have been executed.
-
-### **Examples of Macrotasks in Node.js**
-
-✅ **`setTimeout()`**  
-✅ **`setInterval()`**  
-✅ **`setImmediate()`**  
-✅ **I/O operations (like `fs.readFile()`)**  
-✅ **Network requests (`http`, `fetch()`)**
-
----
-
-## **3. Execution Order of Microtasks & Macrotasks**
-
-1. Execute the **main script (synchronous code)**.
-2. Execute **all microtasks** (Promise callbacks, `process.nextTick()`).
-3. Process **one macrotask** from the queue (e.g., `setTimeout()` callback).
-4. Repeat **steps 2 and 3** (microtasks always run before the next macrotask).
-
----
-
-## **4. Execution Flow Example**
-
-### **Code Example**
-
-```js
-console.log("1. Start");
-
-// Macrotask
-setTimeout(() => {
-	console.log("5. setTimeout callback");
-}, 0);
-
-// Microtask (process.nextTick)
-process.nextTick(() => {
-	console.log("2. process.nextTick callback");
-});
-
-// Microtask (Promise)
-Promise.resolve().then(() => {
-	console.log("3. Promise callback");
-});
-
-// Macrotask
-setImmediate(() => {
-	console.log("6. setImmediate callback");
-});
-
-console.log("4. End");
-```
-
----
-
-### **Execution Order Breakdown**
-
-| **Step** | **Execution**                          | **Type**                      |
-| -------- | -------------------------------------- | ----------------------------- |
-| 1        | `console.log("1. Start");`             | **Synchronous (Main Script)** |
-| 2        | `process.nextTick()` callback executes | **Microtask**                 |
-| 3        | `Promise.then()` callback executes     | **Microtask**                 |
-| 4        | `console.log("4. End");`               | **Synchronous (Main Script)** |
-| 5        | `setTimeout()` callback executes       | **Macrotask (setTimeout)`**   |
-| 6        | `setImmediate()` callback executes     | **Macrotask (setImmediate)`** |
-
----
-
-## **5. Event Loop Execution Order**
-
-1. Execute **main script**.
-2. Run **all microtasks**:
-   - `process.nextTick()`
-   - `Promise.then()`
-3. Process **one macrotask** (`setTimeout` or `setImmediate`).
-4. Repeat **steps 2 & 3** until all tasks are processed.
-
----
-
-## **6. Difference Between `process.nextTick()` and `Promise.then()`**
-
-| Feature  | `process.nextTick()`         | `Promise.then()`                        |
-| -------- | ---------------------------- | --------------------------------------- |
-| Type     | **Microtask**                | **Microtask**                           |
-| Priority | **Executes before Promises** | **Executes after `process.nextTick()`** |
-| Use Case | Handle urgent callbacks      | Handle resolved Promises                |
-
-### **Example**
-
-```js
-process.nextTick(() => console.log("nextTick"));
-Promise.resolve().then(() => console.log("Promise"));
-console.log("End");
-```
-
-### **Execution Order**
-
-1. `console.log("End");` (**Main Script**)
-2. `process.nextTick()` callback (**Microtask**)
-3. `Promise.then()` callback (**Microtask**)
-
-**Output:**
-
-```
-End
-nextTick
-Promise
-```
-
----
-
-## **7. `setTimeout()` vs `setImmediate()`**
-
-| Feature      | `setTimeout(() => {}, 0)` | `setImmediate(() => {})`        |
-| ------------ | ------------------------- | ------------------------------- |
-| Type         | **Macrotask**             | **Macrotask**                   |
-| When It Runs | After delay (~0ms)        | Immediately after I/O callbacks |
-| Priority     | **Lower**                 | **Higher** in I/O operations    |
-
-### **Example**
-
-```js
-setTimeout(() => console.log("setTimeout"), 0);
-setImmediate(() => console.log("setImmediate"));
-```
-
-### **Possible Output**
-
-- If no I/O tasks:
-  ```
-  setTimeout
-  setImmediate
-  ```
-- If inside an I/O callback:
-  ```
-  setImmediate
-  setTimeout
-  ```
-
----
-
-## **8. Complete Execution Flow Example**
-
-```js
-console.log("1. Start");
-
-// Microtasks
-process.nextTick(() => console.log("2. process.nextTick"));
-Promise.resolve().then(() => console.log("3. Promise.then"));
-
-// Macrotasks
-setTimeout(() => console.log("4. setTimeout"), 0);
-setImmediate(() => console.log("5. setImmediate"));
-
-console.log("6. End");
-```
-
-### **Expected Output**
-
-```
-1. Start
-6. End
-2. process.nextTick
-3. Promise.then
-4. setTimeout
-5. setImmediate
-```
-
-### **Explanation**
-
-1. **Main script runs first** (`1. Start`, `6. End`).
-2. **Microtasks run next** (`process.nextTick`, then `Promise.then`).
-3. **Macrotasks execute** (`setTimeout` and `setImmediate`).
-
----
-
-## **Conclusion**
-
-- **Microtasks (process.nextTick, Promises)** run **before macrotasks**.
-- **Macrotasks (setTimeout, setImmediate, I/O callbacks)** run in the next event loop cycle.
-- **Event Loop ensures efficient task execution by prioritizing microtasks.**
-
-Would you like an interactive example or a visualization? 🚀
+Would you like examples of handling specific status codes in a Node.js API? 🚀

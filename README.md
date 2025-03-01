@@ -10,9 +10,9 @@ Here’s a complete list of fundamental JavaScript interview questions covering 
 
 ---
 
-
 ### **3. Variables & Scope**
 
+```jsx
 3. What are the different ways to declare variables in JavaScript?
 4. What happens if you use a variable without declaring it in JavaScript?
 5. Explain the differences between **var**, **let**, and **const**.
@@ -25,18 +25,20 @@ Here’s a complete list of fundamental JavaScript interview questions covering 
 
 12. What are **closures** in JavaScript? Give an example.
 13. How do closures affect **memory usage**?
+```
 
 ---
 
 ### **4. Data types**
+
 10. What is the difference between **primitives** and **reference types** in JavaScript?
 11. What are the different **data types** in JavaScript?
 12. What is the difference between **static** and **dynamic** typing?
-6. How does JavaScript handle automatic type conversion?
-7. What is the difference between loosely typed and strongly typed languages?
-8. What is the difference between **typeof** and **instanceof** operators?
-9. What is the difference between `null` and `undefined`?
-14. Explain the `typeof` operator with examples.
+13. How does JavaScript handle automatic type conversion?
+14. What is the difference between loosely typed and strongly typed languages?
+15. What is the difference between **typeof** and **instanceof** operators?
+16. What is the difference between `null` and `undefined`?
+17. Explain the `typeof` operator with examples.
 
 ---
 
@@ -48,7 +50,6 @@ Here’s a complete list of fundamental JavaScript interview questions covering 
 9. What are memory leaks in JavaScript, and how can they be prevented?
 
 ---
-
 
 ### **4. Operators**
 
@@ -112,27 +113,27 @@ Here’s a complete list of fundamental JavaScript interview questions covering 
 36. How does `find()` differ from `filter()`?
 37. How do you merge two arrays without duplicates?
 38. What is **array destructuring**, and how does it work?
-13. How do you check if a variable is an array?
+39. How do you check if a variable is an array?
 
-39. What is the difference between an array and an object?
-40. What is destructuring, and how does it work with arrays?
-41. What is the difference between `.forEach()`, `.map()`, and `.filter()`?
-42. How do you remove duplicate values from an array?
-43. What is array **slicing** and **splicing**?
-44. What are higher-order functions?
-45. What is the difference between `.find()` and `.findIndex()`?
-46. How do you convert an array to a string?
-47. What is the difference between `.sort()` and `.reverse()`?
-48. What is the `reduce()` method, and how does it work?
-49. How do `Set` and `Map` differ from Arrays and Objects?
-50. How do you efficiently flatten a multi-dimensional array?
-51. What is the purpose of `Array.prototype.every()` and `Array.prototype.some()`?
-52. What is the difference between `.indexOf()` and `.includes()`?
-53. How do you implement a **higher-order function**?
-54. What is the difference between **map, reduce, and filter**?
-55. Explain **default parameters** in JavaScript functions.
-56. What is **destructuring assignment**, and how does it work?
-57. What are **arrow functions**, and how are they different from regular functions?
+40. What is the difference between an array and an object?
+41. What is destructuring, and how does it work with arrays?
+42. What is the difference between `.forEach()`, `.map()`, and `.filter()`?
+43. How do you remove duplicate values from an array?
+44. What is array **slicing** and **splicing**?
+45. What are higher-order functions?
+46. What is the difference between `.find()` and `.findIndex()`?
+47. How do you convert an array to a string?
+48. What is the difference between `.sort()` and `.reverse()`?
+49. What is the `reduce()` method, and how does it work?
+50. How do `Set` and `Map` differ from Arrays and Objects?
+51. How do you efficiently flatten a multi-dimensional array?
+52. What is the purpose of `Array.prototype.every()` and `Array.prototype.some()`?
+53. What is the difference between `.indexOf()` and `.includes()`?
+54. How do you implement a **higher-order function**?
+55. What is the difference between **map, reduce, and filter**?
+56. Explain **default parameters** in JavaScript functions.
+57. What is **destructuring assignment**, and how does it work?
+58. What are **arrow functions**, and how are they different from regular functions?
 
 ---
 

@@ -12,7 +12,7 @@ Here’s a complete list of fundamental JavaScript interview questions covering 
 
 ### `3. Variables & Scope`
 
-``jsx
+````jsx
 3. What are the different ways to declare variables in JavaScript?
 4. What happens if you use a variable without declaring it in JavaScript?
 5. Explain the differences between var, `let`, and `const`.
@@ -25,7 +25,7 @@ Here’s a complete list of fundamental JavaScript interview questions covering 
 
 12. What are `closures` in JavaScript? Give an example.
 13. How do closures affect `memory usage`?
-    ``
+    ```
 
 ---
 
@@ -360,3 +360,4 @@ This is a `complete JavaScript interview question bank` covering all possible to
 35. How does the rest parameter differ from arguments objects?
 36. What is the difference between for, for..of and forEach() loops in terms of performance?
 37. Explain in detail the lexical scope.
+````

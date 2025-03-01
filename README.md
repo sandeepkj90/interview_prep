@@ -1,6 +1,6 @@
 Here’s a complete list of fundamental JavaScript interview questions covering basic concepts:
 
-#### **JavaScript's Interview Questions**
+## **JavaScript's Interview Questions**
 
 ### **1. Introduction to JavaScript**
 

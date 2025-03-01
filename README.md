@@ -12,7 +12,7 @@ Here’s a complete list of fundamental JavaScript interview questions covering 
 
 ### **3. Variables & Scope**
 
-```jsx
+```js
 3. What are the different ways to declare variables in JavaScript?
 4. What happens if you use a variable without declaring it in JavaScript?
 5. Explain the differences between `var`, `let`, and **const**.

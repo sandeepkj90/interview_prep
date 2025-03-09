@@ -492,8 +492,59 @@ npm audit --json
 
 ---
 
-11. What is the purpose of `npx` in Node.js?
-12. Explain the difference between CommonJS and ES6 modules in Node.js.
+### **What is the purpose of `npx` in Node.js?**
+
+- **`npx`** (Node Package Execute) is a command-line tool that comes bundled with **NPM (version 5.2.0 and above)**.
+- Its main purpose is to **execute Node.js packages directly** without needing to install them globally on your system.
+
+**Key Purposes of `npx`**
+Here are some common uses:
+
+- You can execute a package directly without installing it globally.  
+  **Example:** Run `create-react-app` without installing it globally.
+
+```bash
+npx create-react-app my-app
+```
+
+- Downloads the package temporarily.
+- Executes it.
+- Deletes it after execution.
+
+- If a package is installed locally in `node_modules`, you can run it directly using `npx`.  
+  **Example:** Running ESLint locally.
+
+```bash
+npx eslint .  # No need to use ./node_modules/.bin/eslint
+```
+
+- Run a specific version of a package without installing it globally.  
+  **Example:** Running a specific version of TypeScript.
+
+```bash
+npx typescript@4.5.4 --version
+```
+
+- Run code directly from GitHub repositories.  
+  **Example:**
+
+```bash
+npx github:username/repo-name
+```
+
+- With `npx`, you don’t need to install packages globally, reducing version conflicts and system clutter.
+
+**Comparison: `npx` vs `npm`**
+
+| **Aspect**               | **`npx`**                      | **`npm`**                                 |
+| ------------------------ | ------------------------------ | ----------------------------------------- |
+| Execution                | Runs packages **directly**     | Installs and then runs packages           |
+| Installation Requirement | No global install needed       | Requires install first (`npm install -g`) |
+| Use Case                 | Temporary or one-time commands | Permanent or repeated use                 |
+| Default Availability     | Bundled with NPM 5.2.0+        | Installed with Node.js                    |
+
+---
+
 13. How do you prevent installing certain packages in NPM (`.npmignore`)?
 14. What is the difference between RESTful APIs and SOAP APIs?
 15. Explain the difference between process.exit() and process.kill().

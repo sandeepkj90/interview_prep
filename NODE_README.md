@@ -294,7 +294,7 @@
 
 5. Explain the phases of the event loop.
 
-### 6. **Explain the difference between `require` and `import` in Node.js**
+### **Explain the difference between `require` and `import` in Node.js**
 
 In Node.js, both `require` and `import` are used to include modules. Here’s a detailed comparison:
 
@@ -377,6 +377,8 @@ import module from "./module.js";
 | Default Export Syntax       | `module.exports =`   | `export default`                        |
 | Support                     | All Node.js versions | Node.js 12+ with config                 |
 
+---
+
 ### **What is NPM? How do you update NPM to the latest version?**
 
 - **NPM (Node Package Manager)** is the default package manager for **Node.js**.
@@ -428,6 +430,8 @@ Check the NPM version with:
 ```bash
 npm -v
 ```
+
+---
 
 10. What is `npm audit` and how do you use it?
 11. What is the purpose of `npx` in Node.js?

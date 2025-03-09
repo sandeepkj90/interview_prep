@@ -432,6 +432,66 @@ npm -v
 ---
 
 10. What is `npm audit` and how do you use it?
+
+- **`npm audit`** is a command in **NPM** that checks your project's dependencies for **security vulnerabilities**.
+- It scans the packages listed in `package-lock.json` or `node_modules` and reports any known security issues along with recommendations for fixing them.
+
+**1. Run a Security Audit**
+
+```bash
+npm audit
+```
+
+- **What it does:**
+  - Scans your dependencies for vulnerabilities.
+  - Outputs a report with the type and severity (low, moderate, high, critical) of any issues found.
+
+**2. Fix Vulnerabilities Automatically**
+
+```bash
+npm audit fix
+```
+
+- Tries to **automatically fix** vulnerabilities by updating dependencies to secure versions.
+- Modifies `package-lock.json` and sometimes `package.json`.
+- Safe for minor and patch-level updates.
+- **Limitations:**
+  - Does not fix issues that require **major version upgrades**.
+
+**3. Force Fix All Issues (Risky)**
+
+```bash
+npm audit fix --force
+```
+
+- Forces updates, including **major version changes**.
+- Can potentially break your project if new major versions have breaking changes.
+
+**4. View a Detailed Report**
+
+```bash
+npm audit --json
+```
+
+- Outputs a **detailed JSON report** of vulnerabilities.
+- Useful for parsing the results programmatically.
+
+**Example:**
+
+```
+┌───────────────┬──────────────────────────────────────────────────────────────┐
+│ Critical      │ Arbitrary Code Execution                                     │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Package       │ lodash                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Patched in    │ >=4.17.19                                                   │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Dependency of │ my-app                                                      │
+├───────────────┼──────────────────────────────────────────────────────────────┤
+│ Path          │ my-app > some-package > lodash                              │
+└───────────────┴──────────────────────────────────────────────────────────────┘
+```
+
 11. What is the purpose of `npx` in Node.js?
 12. Explain the difference between CommonJS and ES6 modules in Node.js.
 13. How do you prevent installing certain packages in NPM (`.npmignore`)?

@@ -431,7 +431,7 @@ npm -v
 
 ---
 
-10. What is `npm audit` and how do you use it?
+### **What is `npm audit` and how do you use it?**
 
 - **`npm audit`** is a command in **NPM** that checks your project's dependencies for **security vulnerabilities**.
 - It scans the packages listed in `package-lock.json` or `node_modules` and reports any known security issues along with recommendations for fixing them.

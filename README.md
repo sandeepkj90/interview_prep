@@ -284,7 +284,7 @@ Here’s a complete list of fundamental JavaScript interview questions covering 
 
 ---
 
-## Sister
+## **2. First Priority Interview Questions**
 
 5. Explain **execution context** in javascript, **event loop** works.
 6. What is the difference between **macrotasks** and **microtasks**?

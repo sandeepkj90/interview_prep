@@ -290,7 +290,7 @@
 
 ---
 
-## **2. Main Interview For Sister**
+## **2. First Priority Interview Questions**
 
 5. Explain the phases of the event loop.
 6. Explain the difference between `require` and `import` in Node.js.

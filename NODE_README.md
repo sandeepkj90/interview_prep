@@ -298,7 +298,7 @@
 
 In Node.js, both `require` and `import` are used to include modules. Here’s a detailed comparison:
 
-### `require` (CommonJS)
+####`require` (CommonJS)
 
 **Syntax:**
 
@@ -330,7 +330,7 @@ const module = require("./module");
 
 ---
 
-### `import` (ECMAScript Modules - ESM)
+#### `import` (ECMAScript Modules - ESM)
 
 **Syntax:**
 
@@ -423,7 +423,7 @@ nvm install node --reinstall-packages-from=node
 
 - This command updates to the latest Node.js version and reinstalls your global packages.
 
-### **Verify the Update**
+#### **Verify the Update**
 
 Check the NPM version with:
 

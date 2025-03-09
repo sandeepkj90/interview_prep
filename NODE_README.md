@@ -376,8 +376,60 @@ import module from "./module.js";
 | Support                     | All Node.js versions | Node.js 12+ with config                 |
 
 7. What is NPM? How do you update NPM to the latest version?
-8. How do you list all globally installed packages using NPM?
-9. How do you publish a package to the NPM registry?
+
+### 🌟 What is **NPM**?
+
+- **NPM (Node Package Manager)** is the default package manager for **Node.js**.
+- It is used to manage, share, and install libraries or dependencies for JavaScript projects.
+- When you install Node.js, NPM gets installed automatically.
+
+**Key Features of NPM:**
+
+- **Online Repository:** Provides access to a vast ecosystem of open-source libraries on [npmjs.com](https://www.npmjs.com/).
+- **Dependency Management:** Automatically handles dependencies defined in `package.json`.
+
+**Common Commands:**
+
+- `npm init`: Create a `package.json` file for your project.
+- `npm install <package>`: Install a package.
+- `npm uninstall <package>`: Remove a package.
+- `npm list`: Show installed packages.
+
+**To update NPM**, you can use one of the following methods:
+
+#### **Using NPM Itself (Recommended)**
+
+Run this command in the terminal:
+
+```bash
+npm install -g npm@latest
+```
+
+- This installs the **latest stable version** globally.
+- You may need to use `sudo` on Linux/macOS:
+  ```bash
+  sudo npm install -g npm@latest
+  ```
+
+#### **Using `nvm` (Node Version Manager)**
+
+If you use `nvm`, you can reinstall Node.js to get the latest NPM:
+
+```bash
+nvm install node --reinstall-packages-from=node
+```
+
+- This command updates to the latest Node.js version and reinstalls your global packages.
+
+### **Verify the Update**
+
+Check the NPM version with:
+
+```bash
+npm -v
+```
+
+Let me know if you need help with any step! 😊 8. How do you list all globally installed packages using NPM? 9. How do you publish a package to the NPM registry?
 
 10. What is `npm audit` and how do you use it?
 11. What is the purpose of `npx` in Node.js?
@@ -473,29 +525,29 @@ import module from "./module.js";
 97. What is testing in Node.js? Why is it important?
 98. What is unit testing, and how is it different from integration testing?
 99. What is the role of mocks and stubs in testing?
-100. How do you write tests for asynchronous functions in Node.js using promises or async/await?
-101. What is the purpose of `before()` and `after()` hooks in Mocha?
-102. What are `beforeEach()` and `afterEach()` hooks, and how do you use them?
-103. What is a mock database, and why would you use it in testing?
-104. How do you handle testing of file system operations (e.g., reading/writing files)?
-105. What is code coverage, and how do you check it for a Node.js application?
-106. How do you handle end-to-end testing (E2E) in Node.js applications?
-107. How do you perform load testing and performance testing in Node.js?
-108. How do you test for memory leaks in a Node.js application?
-109. How do you debug memory leaks in Node.js applications, especially in production environments?
-110. How do you handle bulk data operations (e.g., batch updates, batch deletes) in a RESTful API?
-111. What are the main factors that affect the performance of a Node.js application?
-112. How can you monitor the performance of a Node.js application?
-113. How do you profile a Node.js application to analyze performance bottlenecks?
-114. How can you handle a large number of concurrent requests in Node.js without degrading performance?
-115. What are some strategies for optimizing database performance in Node.js applications?
-116. How do you handle slow database queries to optimize Node.js performance?
-117. What is the significance of horizontal scaling in Node.js, and how do you implement it?
-118. What is microservices architecture, and how does it differ from a monolithic architecture?
-119. What are the advantages of using microservices over a monolithic architecture in a Node.js application?
-120. What are the key components of a microservices-based Node.js application?
-121. How do microservices communicate with each other in a Node.js application?
-122. What are the common protocols used for communication between microservices in Node.js?
-123. What is service discovery, and how is it implemented in microservices with Node.js?
-124. What is the role of message brokers (e.g., RabbitMQ, Kafka) in microservices architecture?
-125. How do you ensure resilience and fault tolerance in Node.js microservices?
+100.  How do you write tests for asynchronous functions in Node.js using promises or async/await?
+101.  What is the purpose of `before()` and `after()` hooks in Mocha?
+102.  What are `beforeEach()` and `afterEach()` hooks, and how do you use them?
+103.  What is a mock database, and why would you use it in testing?
+104.  How do you handle testing of file system operations (e.g., reading/writing files)?
+105.  What is code coverage, and how do you check it for a Node.js application?
+106.  How do you handle end-to-end testing (E2E) in Node.js applications?
+107.  How do you perform load testing and performance testing in Node.js?
+108.  How do you test for memory leaks in a Node.js application?
+109.  How do you debug memory leaks in Node.js applications, especially in production environments?
+110.  How do you handle bulk data operations (e.g., batch updates, batch deletes) in a RESTful API?
+111.  What are the main factors that affect the performance of a Node.js application?
+112.  How can you monitor the performance of a Node.js application?
+113.  How do you profile a Node.js application to analyze performance bottlenecks?
+114.  How can you handle a large number of concurrent requests in Node.js without degrading performance?
+115.  What are some strategies for optimizing database performance in Node.js applications?
+116.  How do you handle slow database queries to optimize Node.js performance?
+117.  What is the significance of horizontal scaling in Node.js, and how do you implement it?
+118.  What is microservices architecture, and how does it differ from a monolithic architecture?
+119.  What are the advantages of using microservices over a monolithic architecture in a Node.js application?
+120.  What are the key components of a microservices-based Node.js application?
+121.  How do microservices communicate with each other in a Node.js application?
+122.  What are the common protocols used for communication between microservices in Node.js?
+123.  What is service discovery, and how is it implemented in microservices with Node.js?
+124.  What is the role of message brokers (e.g., RabbitMQ, Kafka) in microservices architecture?
+125.  How do you ensure resilience and fault tolerance in Node.js microservices?

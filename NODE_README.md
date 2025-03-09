@@ -296,9 +296,7 @@
 6. Explain the difference between `require` and `import` in Node.js.
    In Node.js, both `require` and `import` are used to include modules. Here’s a detailed comparison:
 
----
-
-### 🟢 `require` (CommonJS)
+### `require` (CommonJS)
 
 **Syntax:**
 
@@ -330,7 +328,7 @@ const module = require("./module");
 
 ---
 
-### 🔵 `import` (ECMAScript Modules - ESM)
+### `import` (ECMAScript Modules - ESM)
 
 **Syntax:**
 
@@ -366,7 +364,7 @@ import module from "./module.js";
 
 ---
 
-### ⚖️ Summary of Differences
+### Summary of Differences
 
 | Aspect                      | `require` (CommonJS) | `import` (ESM)                          |
 | --------------------------- | -------------------- | --------------------------------------- |
@@ -376,8 +374,6 @@ import module from "./module.js";
 | Dynamic Loading             | Supported directly   | Supported via `import()` function       |
 | Default Export Syntax       | `module.exports =`   | `export default`                        |
 | Support                     | All Node.js versions | Node.js 12+ with config                 |
-
-Would you like to dive deeper into any of these aspects? 😊
 
 7. What is NPM? How do you update NPM to the latest version?
 8. How do you list all globally installed packages using NPM?

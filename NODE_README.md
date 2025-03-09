@@ -377,8 +377,6 @@ import module from "./module.js";
 
 7. What is NPM? How do you update NPM to the latest version?
 
-### 🌟 What is **NPM**?
-
 - **NPM (Node Package Manager)** is the default package manager for **Node.js**.
 - It is used to manage, share, and install libraries or dependencies for JavaScript projects.
 - When you install Node.js, NPM gets installed automatically.
@@ -428,8 +426,6 @@ Check the NPM version with:
 ```bash
 npm -v
 ```
-
-Let me know if you need help with any step! 😊 8. How do you list all globally installed packages using NPM? 9. How do you publish a package to the NPM registry?
 
 10. What is `npm audit` and how do you use it?
 11. What is the purpose of `npx` in Node.js?

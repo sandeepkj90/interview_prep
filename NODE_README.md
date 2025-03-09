@@ -91,8 +91,8 @@ import module from "./module.js";
 
 **Key Features of NPM:**
 
-- **Online Repository:** Provides access to a vast ecosystem of open-source libraries on [npmjs.com](https://www.npmjs.com/).
-- **Dependency Management:** Automatically handles dependencies defined in `package.json`.
+- Provides access to a vast ecosystem of open-source libraries on [npmjs.com](https://www.npmjs.com/).
+- Automatically handles dependencies defined in `package.json`.
 
 **Common Commands:**
 
@@ -103,7 +103,7 @@ import module from "./module.js";
 
 **To update NPM**, you can use one of the following methods:
 
-#### **Using NPM Itself (Recommended)**
+**Using NPM Itself (Recommended)**
 
 Run this command in the terminal:
 
@@ -117,7 +117,7 @@ npm install -g npm@latest
   sudo npm install -g npm@latest
   ```
 
-#### **Using `nvm` (Node Version Manager)**
+**Using `nvm` (Node Version Manager)**
 
 If you use `nvm`, you can reinstall Node.js to get the latest NPM:
 
@@ -127,7 +127,7 @@ nvm install node --reinstall-packages-from=node
 
 - This command updates to the latest Node.js version and reinstalls your global packages.
 
-#### **Verify the Update**
+**Verify the Update**
 
 Check the NPM version with:
 
@@ -253,7 +253,57 @@ npx github:username/repo-name
 
 ---
 
-13. How do you prevent installing certain packages in NPM (`.npmignore`)?
+### **How do you prevent installing certain packages in NPM (`.npmignore`)?**
+
+- **`.npmignore`** is a file used to **exclude files and folders** from being published to the **NPM registry** when you run `npm publish`.
+- It works similarly to `.gitignore` but is specifically for managing the content of your NPM packages.
+
+- In your project’s root directory, create a file named `.npmignore`.
+
+- Add files or folders that you don’t want to publish to NPM.  
+  **Example `.npmignore` content:**
+
+```
+node_modules          # Ignore node_modules folder
+test/                 # Ignore test folder
+secret-config.js      # Ignore specific files
+.env                  # Ignore environment variables
+*.log                 # Ignore all log files
+coverage/             # Ignore code coverage reports
+```
+
+- When you run `npm publish`:
+  - NPM checks `.npmignore` for files to exclude.
+  - If `.npmignore` is missing, NPM falls back to `.gitignore` if it exists.
+- Files listed in `.npmignore` will **not** be uploaded to the NPM registry.
+
+- Use `optionalDependencies` or `peerDependencies`\*\*
+  If you want to prevent certain packages from being installed as dependencies, consider these options:
+
+- **`optionalDependencies`:** Will not cause install to fail if missing.
+- **`peerDependencies`:** Suggests that a package should be installed by the user.
+
+**Example in `package.json`:**
+
+```json
+{
+	"optionalDependencies": {
+		"some-package": "^1.0.0"
+	},
+	"peerDependencies": {
+		"react": "^18.0.0"
+	}
+}
+```
+
+NPM **automatically ignores** certain files, even without `.npmignore`:
+
+- `.git` directories
+- `.npmignore` and `.gitignore` themselves
+- `node_modules` (unless explicitly included)
+
+---
+
 14. What is the difference between RESTful APIs and SOAP APIs?
 15. Explain the difference between process.exit() and process.kill().
 16. Explain the `process` module and its significance in Node.js.

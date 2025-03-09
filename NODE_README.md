@@ -293,8 +293,10 @@
 ## **2. First Priority Interview Questions**
 
 5. Explain the phases of the event loop.
-6. Explain the difference between `require` and `import` in Node.js.
-   In Node.js, both `require` and `import` are used to include modules. Here’s a detailed comparison:
+
+### 6. **Explain the difference between `require` and `import` in Node.js**
+
+In Node.js, both `require` and `import` are used to include modules. Here’s a detailed comparison:
 
 ### `require` (CommonJS)
 
@@ -375,7 +377,7 @@ import module from "./module.js";
 | Default Export Syntax       | `module.exports =`   | `export default`                        |
 | Support                     | All Node.js versions | Node.js 12+ with config                 |
 
-7. What is NPM? How do you update NPM to the latest version?
+### **What is NPM? How do you update NPM to the latest version?**
 
 - **NPM (Node Package Manager)** is the default package manager for **Node.js**.
 - It is used to manage, share, and install libraries or dependencies for JavaScript projects.

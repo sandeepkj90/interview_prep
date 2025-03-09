@@ -284,4 +284,54 @@ Here’s a complete list of fundamental JavaScript interview questions covering 
 
 ---
 
+## Sister
 
+5. Explain **execution context** in javascript, **event loop** works.
+6. What is the difference between **macrotasks** and **microtasks**?
+7. What is a **symbol** in JavaScript, and how is it used?
+8. Explain the difference between **interpreted** and **compiled languages**.
+9. What are JavaScript **truthy** and **falsy** values?
+10. Explain in detail the **lexical scope**.
+11. What is the difference between **loosely typed** and **strongly typed** languages?
+12. What is the purpose of **strict mode** (`"use strict"`) in JavaScript?
+13. How does JavaScript handle **memory allocation**?
+14. What is **garbage collection** in JavaScript?
+15. What are **memory leaks** in JavaScript, and how can they be prevented?
+16. What is the **spread (`...`) operator**?
+17. What is the **rest parameter**?
+18. What is the difference between `for`, `for..of` and `forEach()` loops in terms of performance?
+19. What are `for...in` and `for...of` loops? How do they differ?
+20. How does **closure it affect loop behavior** in JavaScript?
+21. How can you optimize loops for performance in JavaScript?
+22. How can you **debounce a function** in a loop scenario?
+23. What are **arrow functions**, and how do they differ from regular functions?
+24. How does `this` keyword behave differently in arrow functions?
+25. What is an **IIFE** (Immediately Invoked Function Expression), and why is it used?
+26. What is the difference between a **parameter** and an **argument**?
+27. What is **function currying**, and how does it work?
+28. How does JavaScript handle **recursion**?
+29. What is the difference between `.call()`, `.apply()`, and `.bind()`?
+30. What are **closures** in JavaScript? Give an example.
+31. How do closures affect **memory usage**?
+32. What is **memoization**, and how can it optimize function performance?
+33. What is **method chaining**, and how does it work?
+34. How do you **remove duplicates** from an array?
+35. What is the difference between **splice()** and **slice()**?
+36. How does **find()** differ from **filter()**?
+37. What is **array destructuring**, and how does it work?
+38. How do you check if a variable is an array?
+39. What is the difference between an **array** and an **object**?
+40. What is the difference between **.forEach()**, **.map()**, and **.filter()**?
+41. What is the difference between **.find()** and **.findIndex()**?
+42. What is the **reduce()** method, and how does it work?
+43. How do **Set** and **Map** differ from Arrays and Objects?
+44. How do you efficiently **flatten** a multi-dimensional array?
+45. Explain **default parameters** in JavaScript functions.
+46. How to repeat a string multiple times using `repeat()`?
+47. What are **regular expressions** in JavaScript? How do you declare them?
+48. Explain common regex methods: `test()`, `exec()`, `match()`, and `matchAll()`.
+49. How do you perform a **global search** with regex? Explain flags like `g`, `i`, `m`.
+50. How to **validate an email** or **phone number** using regex?
+51. Explain how to **count the occurrences of a character** or substring in a string.
+52. Performance: `+` vs `concat()` vs template literals for string concatenation.
+53. What are **objects** in JavaScript, and how do you create them?

@@ -349,121 +349,191 @@ Let’s break down the differences:
 
 ---
 
+### **Explain the `process` module and its significance in Node.js.**
+
+- The `process` module is a built-in **global object** in Node.js that provides **information and control over the current Node.js process**.
+- It’s available in all Node.js programs, and you don’t need to require it explicitly to use it.
+- The `process` module helps you interact with the **operating system**, **environment variables**, **exit codes**, **standard input/output streams**, and much more.
+
+  - **`process.argv`**: An array containing the **command-line arguments** passed to the Node.js process.
+    - **Example:**
+      ```js
+      console.log(process.argv);
+      // Output: [ 'node', 'script.js', 'arg1', 'arg2' ]
+      ```
+  - **`process.env`**: Provides access to **environment variables** of the system.
+    - **Example:**
+      ```js
+      console.log(process.env.PATH);
+      ```
+  - **`process.pid`**: The **PID** (Process ID) of the current process.
+    - **Example:**
+      ```js
+      console.log(process.pid);
+      ```
+  - **`process.platform`**: The platform on which Node.js is running (e.g., `linux`, `win32`, `darwin`).
+
+    - **Example:**
+      ```js
+      console.log(process.platform);
+      ```
+
+  - **`process.exit([code])`**: Exits the current process with an optional exit code. A code of `0` means successful execution, and any non-zero code signifies an error.
+    - **Example:**
+      ```js
+      process.exit(0); // Successful termination
+      ```
+  - **`process.kill(pid, signal)`**: Sends a signal to a process (either the current process or another process) identified by its **PID**. You can send signals like `SIGTERM`, `SIGKILL`, etc.
+    - **Example:**
+      ```js
+      process.kill(process.pid, "SIGTERM"); // Terminate current process
+      ```
+  - **`process.setTimeout(callback, delay)`**: Sets a timer that will invoke a callback after a certain period of time.
+  - **`process.setInterval(callback, delay)`**: Repeatedly calls a callback with a fixed delay.
+  - **`process.nextTick(callback)`**: Schedules a callback to be executed in the **next iteration** of the event loop, before any I/O events or timers are processed.
+
+    - **Example:**
+      ```js
+      process.nextTick(() => {
+      	console.log("This runs before any I/O");
+      });
+      ```
+
+  - **`process.stdin`**: Provides a **readable stream** for **standard input** (e.g., from the terminal).
+    - **Example:**
+      ```js
+      process.stdin.on("data", (data) => {
+      	console.log(`You typed: ${data}`);
+      });
+      ```
+  - **`process.stdout`**: Provides a **writable stream** for **standard output**.
+    - **Example:**
+      ```js
+      process.stdout.write("Hello, World!\n");
+      ```
+  - **`process.stderr`**: Provides a **writable stream** for **standard error** output.
+    - **Example:**
+      ```js
+      process.stderr.write("This is an error message\n");
+      ```
+
+---
+
 15. Explain the difference between process.exit() and process.kill().
-16. Explain the `process` module and its significance in Node.js.
-17. What is the difference between `process.nextTick()` and `setImmediate()`?
-18. How to monitor file system changes using the `fs` module?
-19. How do you append data to an existing file in Node.js?
-20. How to handle multipart/form-data in Express?
-21. How do you check if a file exists in Node.js?
-22. How do you handle file errors (e.g., file not found, permission issues) in Node.js?
-23. How do you get the file stats (e.g., size, permissions) in Node.js?
-24. What are the potential security risks when handling files in Node.js, and how do you mitigate them?
-25. How do you implement encryption and decryption when reading or writing sensitive files in Node.js?
-26. What are the best practices for managing file permissions in Node.js?
-27. Describe the process of handling large file uploads efficiently in Node.js.
-28. How do you create a basic HTTP server in Node.js using the `http` module?
-29. How does the `http2` module differ from the `http` module?
-30. What is the purpose of `util.promisify()` in Node.js?
 
-31. What are streams in Node.js? Explain types of streams.
-32. Explain the difference between `Readable` and `Writable` streams.
-33. How do you pipe streams in Node.js?
-34. Explain the `zlib` module and its use in file compression.
-35. How to handle uncaught exceptions in asynchronous code?
-36. What is the difference between `res.end()` and `res.send()`?
-37. How to redirect requests in Express using `res.redirect()`?
-38. How do you serve static files using Node.js?
-39. What is middleware in the context of web servers?
-40. What are the best practices for organizing middleware in a large Express application?
-41. How do you handle session management and cookies using middleware in Express?
-42. How do you handle authentication and authorization in Express?
-43. Explain how to implement JWT-based authentication in Express.
-44. How can we implement refresh token for JWT .
-45. Explain the structure of JWT token .
-46. What is the difference between `app.get()` and `app.post()` in Express?
-47. How do you handle PUT or PATCH requests to update a resource in Express?
-48. How do you handle sessions and cookies in Node.js?
-49. What are HTTP headers and how do you set them in Node.js?
-50. How do you handle large payloads efficiently in Node.js web servers?
-51. How do you organize routes in a large Express application?
-52. How can you make middleware run only for specific routes?
-53. How do you define dynamic routes in Express?
-54. How do you handle requests that don’t match any route in Express?
-55. How can you implement logging and monitoring middleware in Express?
-56. How do you implement conditional middleware execution based on request properties?
-57. Explain the purpose of route chaining in Express.
-58. What is the purpose of the `app.all()` method in Express?
-59. Explain clustering in Express to handle multiple requests.
-60. How do you implement rate limiting for form submissions to prevent abuse in Express?
-61. How do you implement dynamic filtering and sorting based on query parameters in a Node.js API?
-62. What are the performance considerations when handling large files or form data in a Node.js server?
-63. What are secure ways to store passwords in a Node.js application?
-64. How do you implement role-based access control (RBAC) in a Node.js application?
-65. What is response streaming in Express and how do you use it?
-66. What is API Gateway and how do you implement it with Express?
-67. What is the difference between `process` and `global` objects in Node.js?
-68. How does Node.js handle multiple requests at the same time?
-69. How to implement `cluster` in Node.js? Perform load balancing in a Node.js application.
-70. How do you implement concurrency in Node.js using the `cluster` module?
+16. What is the difference between `process.nextTick()` and `setImmediate()`?
+17. How to monitor file system changes using the `fs` module?
+18. How do you append data to an existing file in Node.js?
+19. How to handle multipart/form-data in Express?
+20. How do you check if a file exists in Node.js?
+21. How do you handle file errors (e.g., file not found, permission issues) in Node.js?
+22. How do you get the file stats (e.g., size, permissions) in Node.js?
+23. What are the potential security risks when handling files in Node.js, and how do you mitigate them?
+24. How do you implement encryption and decryption when reading or writing sensitive files in Node.js?
+25. What are the best practices for managing file permissions in Node.js?
+26. Describe the process of handling large file uploads efficiently in Node.js.
+27. How do you create a basic HTTP server in Node.js using the `http` module?
+28. How does the `http2` module differ from the `http` module?
+29. What is the purpose of `util.promisify()` in Node.js?
 
-71. How do you detect memory leaks in asynchronous code?
-72. How to handle memory leaks in Node.js?
-73. How do you handle memory leaks with large NPM packages?
-74. How do you secure a Node.js application?
-75. What is CORS and how to enable it in Node.js?
-76. How do you use the `child_process` module to run external commands?
-77. Explain the difference between `spawn()`, `exec()`, and `fork()` in `child_process`.
-78. What are worker threads in Node.js? How do they handle asynchronous tasks?
-79. How to implement rate limiting in asynchronous API calls?
-80. How to optimize memory usage in asynchronous functions?
-81. What is server-side rendering (SSR) in Node.js?
-82. How do you implement caching in Node.js web servers?
-83. Explain connection pooling and its implementation in Node.js servers.
-84. How do you handle rate limiting, API throttling, and retries in a RESTful API?
-85. What is the purpose of using `next(err)` in error handling middleware?
-86. How do you implement fallback mechanisms for error handling in microservices built with Express?
-87. How do you implement and manage different authentication mechanisms (e.g., OAuth, API keys) in RESTful APIs?
-88. What is OAuth 2.0, and how does it work with RESTful APIs?
+30. What are streams in Node.js? Explain types of streams.
+31. Explain the difference between `Readable` and `Writable` streams.
+32. How do you pipe streams in Node.js?
+33. Explain the `zlib` module and its use in file compression.
+34. How to handle uncaught exceptions in asynchronous code?
+35. What is the difference between `res.end()` and `res.send()`?
+36. How to redirect requests in Express using `res.redirect()`?
+37. How do you serve static files using Node.js?
+38. What is middleware in the context of web servers?
+39. What are the best practices for organizing middleware in a large Express application?
+40. How do you handle session management and cookies using middleware in Express?
+41. How do you handle authentication and authorization in Express?
+42. Explain how to implement JWT-based authentication in Express.
+43. How can we implement refresh token for JWT .
+44. Explain the structure of JWT token .
+45. What is the difference between `app.get()` and `app.post()` in Express?
+46. How do you handle PUT or PATCH requests to update a resource in Express?
+47. How do you handle sessions and cookies in Node.js?
+48. What are HTTP headers and how do you set them in Node.js?
+49. How do you handle large payloads efficiently in Node.js web servers?
+50. How do you organize routes in a large Express application?
+51. How can you make middleware run only for specific routes?
+52. How do you define dynamic routes in Express?
+53. How do you handle requests that don’t match any route in Express?
+54. How can you implement logging and monitoring middleware in Express?
+55. How do you implement conditional middleware execution based on request properties?
+56. Explain the purpose of route chaining in Express.
+57. What is the purpose of the `app.all()` method in Express?
+58. Explain clustering in Express to handle multiple requests.
+59. How do you implement rate limiting for form submissions to prevent abuse in Express?
+60. How do you implement dynamic filtering and sorting based on query parameters in a Node.js API?
+61. What are the performance considerations when handling large files or form data in a Node.js server?
+62. What are secure ways to store passwords in a Node.js application?
+63. How do you implement role-based access control (RBAC) in a Node.js application?
+64. What is response streaming in Express and how do you use it?
+65. What is API Gateway and how do you implement it with Express?
+66. What is the difference between `process` and `global` objects in Node.js?
+67. How does Node.js handle multiple requests at the same time?
+68. How to implement `cluster` in Node.js? Perform load balancing in a Node.js application.
+69. How do you implement concurrency in Node.js using the `cluster` module?
 
-89. What is the difference between uncaught exceptions and unhandled promise rejections?
-90. How can you set up automated error handling and alerting in a Node.js application using tools like Prometheus, Grafana, or ELK Stack?
-91. How do you implement a fault-tolerant error-handling mechanism in a Node.js application with multiple dependencies or services?
-92. How do you optimize performance in a Node.js application?
-93. How do you implement two-factor authentication (2FA) in Node.js?
-94. What is the difference between storing authentication tokens in cookies vs local storage in the browser?
+70. How do you detect memory leaks in asynchronous code?
+71. How to handle memory leaks in Node.js?
+72. How do you handle memory leaks with large NPM packages?
+73. How do you secure a Node.js application?
+74. What is CORS and how to enable it in Node.js?
+75. How do you use the `child_process` module to run external commands?
+76. Explain the difference between `spawn()`, `exec()`, and `fork()` in `child_process`.
+77. What are worker threads in Node.js? How do they handle asynchronous tasks?
+78. How to implement rate limiting in asynchronous API calls?
+79. How to optimize memory usage in asynchronous functions?
+80. What is server-side rendering (SSR) in Node.js?
+81. How do you implement caching in Node.js web servers?
+82. Explain connection pooling and its implementation in Node.js servers.
+83. How do you handle rate limiting, API throttling, and retries in a RESTful API?
+84. What is the purpose of using `next(err)` in error handling middleware?
+85. How do you implement fallback mechanisms for error handling in microservices built with Express?
+86. How do you implement and manage different authentication mechanisms (e.g., OAuth, API keys) in RESTful APIs?
+87. What is OAuth 2.0, and how does it work with RESTful APIs?
 
-95. What are the common ways to protect sensitive data in a web application?
-96. How do you integrate third-party APIs into your RESTful API built with Express?
-97. What is testing in Node.js? Why is it important?
-98. What is unit testing, and how is it different from integration testing?
-99. What is the role of mocks and stubs in testing?
-100.  How do you write tests for asynchronous functions in Node.js using promises or async/await?
-101.  What is the purpose of `before()` and `after()` hooks in Mocha?
-102.  What are `beforeEach()` and `afterEach()` hooks, and how do you use them?
-103.  What is a mock database, and why would you use it in testing?
-104.  How do you handle testing of file system operations (e.g., reading/writing files)?
-105.  What is code coverage, and how do you check it for a Node.js application?
-106.  How do you handle end-to-end testing (E2E) in Node.js applications?
-107.  How do you perform load testing and performance testing in Node.js?
-108.  How do you test for memory leaks in a Node.js application?
-109.  How do you debug memory leaks in Node.js applications, especially in production environments?
-110.  How do you handle bulk data operations (e.g., batch updates, batch deletes) in a RESTful API?
-111.  What are the main factors that affect the performance of a Node.js application?
-112.  How can you monitor the performance of a Node.js application?
-113.  How do you profile a Node.js application to analyze performance bottlenecks?
-114.  How can you handle a large number of concurrent requests in Node.js without degrading performance?
-115.  What are some strategies for optimizing database performance in Node.js applications?
-116.  How do you handle slow database queries to optimize Node.js performance?
-117.  What is the significance of horizontal scaling in Node.js, and how do you implement it?
-118.  What is microservices architecture, and how does it differ from a monolithic architecture?
-119.  What are the advantages of using microservices over a monolithic architecture in a Node.js application?
-120.  What are the key components of a microservices-based Node.js application?
-121.  How do microservices communicate with each other in a Node.js application?
-122.  What are the common protocols used for communication between microservices in Node.js?
-123.  What is service discovery, and how is it implemented in microservices with Node.js?
-124.  What is the role of message brokers (e.g., RabbitMQ, Kafka) in microservices architecture?
-125.  How do you ensure resilience and fault tolerance in Node.js microservices?
+88. What is the difference between uncaught exceptions and unhandled promise rejections?
+89. How can you set up automated error handling and alerting in a Node.js application using tools like Prometheus, Grafana, or ELK Stack?
+90. How do you implement a fault-tolerant error-handling mechanism in a Node.js application with multiple dependencies or services?
+91. How do you optimize performance in a Node.js application?
+92. How do you implement two-factor authentication (2FA) in Node.js?
+93. What is the difference between storing authentication tokens in cookies vs local storage in the browser?
+
+94. What are the common ways to protect sensitive data in a web application?
+95. How do you integrate third-party APIs into your RESTful API built with Express?
+96. What is testing in Node.js? Why is it important?
+97. What is unit testing, and how is it different from integration testing?
+98. What is the role of mocks and stubs in testing?
+99. How do you write tests for asynchronous functions in Node.js using promises or async/await?
+100.  What is the purpose of `before()` and `after()` hooks in Mocha?
+101.  What are `beforeEach()` and `afterEach()` hooks, and how do you use them?
+102.  What is a mock database, and why would you use it in testing?
+103.  How do you handle testing of file system operations (e.g., reading/writing files)?
+104.  What is code coverage, and how do you check it for a Node.js application?
+105.  How do you handle end-to-end testing (E2E) in Node.js applications?
+106.  How do you perform load testing and performance testing in Node.js?
+107.  How do you test for memory leaks in a Node.js application?
+108.  How do you debug memory leaks in Node.js applications, especially in production environments?
+109.  How do you handle bulk data operations (e.g., batch updates, batch deletes) in a RESTful API?
+110.  What are the main factors that affect the performance of a Node.js application?
+111.  How can you monitor the performance of a Node.js application?
+112.  How do you profile a Node.js application to analyze performance bottlenecks?
+113.  How can you handle a large number of concurrent requests in Node.js without degrading performance?
+114.  What are some strategies for optimizing database performance in Node.js applications?
+115.  How do you handle slow database queries to optimize Node.js performance?
+116.  What is the significance of horizontal scaling in Node.js, and how do you implement it?
+117.  What is microservices architecture, and how does it differ from a monolithic architecture?
+118.  What are the advantages of using microservices over a monolithic architecture in a Node.js application?
+119.  What are the key components of a microservices-based Node.js application?
+120.  How do microservices communicate with each other in a Node.js application?
+121.  What are the common protocols used for communication between microservices in Node.js?
+122.  What is service discovery, and how is it implemented in microservices with Node.js?
+123.  What is the role of message brokers (e.g., RabbitMQ, Kafka) in microservices architecture?
+124.  How do you ensure resilience and fault tolerance in Node.js microservices?
 
 ---
 

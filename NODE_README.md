@@ -1,4 +1,4 @@
-## **2. First Priority Interview Questions**
+## **1. First Priority Interview Questions**
 
 5. Explain the phases of the event loop.
 

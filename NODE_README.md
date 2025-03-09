@@ -328,8 +328,6 @@ const module = require("./module");
   }
   ```
 
----
-
 #### `import` (ECMAScript Modules - ESM)
 
 **Syntax:**
@@ -491,6 +489,8 @@ npm audit --json
 │ Path          │ my-app > some-package > lodash                              │
 └───────────────┴──────────────────────────────────────────────────────────────┘
 ```
+
+---
 
 11. What is the purpose of `npx` in Node.js?
 12. Explain the difference between CommonJS and ES6 modules in Node.js.

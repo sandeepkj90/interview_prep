@@ -298,7 +298,7 @@
 
 In Node.js, both `require` and `import` are used to include modules. Here’s a detailed comparison:
 
-####`require` (CommonJS)
+#### `require` (CommonJS)
 
 **Syntax:**
 
@@ -363,8 +363,6 @@ import module from "./module.js";
   	const module = await import("./module.js");
   }
   ```
-
----
 
 ### Summary of Differences
 

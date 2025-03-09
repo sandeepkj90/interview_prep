@@ -294,6 +294,91 @@
 
 5. Explain the phases of the event loop.
 6. Explain the difference between `require` and `import` in Node.js.
+   In Node.js, both `require` and `import` are used to include modules. Here’s a detailed comparison:
+
+---
+
+### 🟢 `require` (CommonJS)
+
+**Syntax:**
+
+```js
+const module = require("./module");
+```
+
+- Works **synchronously**: Modules are loaded and executed immediately when `require` is called.
+- Suitable for traditional Node.js projects.
+
+  ```js
+  // module.js
+  module.exports = function () {
+  	console.log("Hello from CommonJS!");
+  };
+
+  // main.js
+  const greet = require("./module");
+  greet(); // Output: Hello from CommonJS!
+  ```
+
+- Supported in all versions of Node.js.
+- Can be used **dynamically** inside functions or conditionals.
+  ```js
+  if (condition) {
+  	const module = require("./module");
+  }
+  ```
+
+---
+
+### 🔵 `import` (ECMAScript Modules - ESM)
+
+**Syntax:**
+
+```js
+import module from "./module.js";
+```
+
+- Uses **ECMAScript Modules (ESM)**, a standardized module system introduced in ES6 (ES2015).
+- Requires setting `"type": "module"` in `package.json` or using `.mjs` file extensions.
+
+- Works **asynchronously**: Modules are pre-parsed and can be optimized before execution.
+- Encouraged for modern JavaScript and TypeScript projects.
+
+  ```js
+  // module.js
+  export default function () {
+  	console.log("Hello from ESM!");
+  }
+
+  // main.js
+  import greet from "./module.js";
+  greet(); // Output: Hello from ESM!
+  ```
+
+- Supported in Node.js 12+ with the proper configuration.
+
+- Uses `import()` function for dynamic imports.
+  ```js
+  if (condition) {
+  	const module = await import("./module.js");
+  }
+  ```
+
+---
+
+### ⚖️ Summary of Differences
+
+| Aspect                      | `require` (CommonJS) | `import` (ESM)                          |
+| --------------------------- | -------------------- | --------------------------------------- |
+| Module System               | CommonJS             | ECMAScript Modules (ESM)                |
+| File Extensions             | `.js` by default     | `.mjs` or `.js` with `"type": "module"` |
+| Synchronous vs Asynchronous | Synchronous          | Asynchronous                            |
+| Dynamic Loading             | Supported directly   | Supported via `import()` function       |
+| Default Export Syntax       | `module.exports =`   | `export default`                        |
+| Support                     | All Node.js versions | Node.js 12+ with config                 |
+
+Would you like to dive deeper into any of these aspects? 😊
+
 7. What is NPM? How do you update NPM to the latest version?
 8. How do you list all globally installed packages using NPM?
 9. How do you publish a package to the NPM registry?

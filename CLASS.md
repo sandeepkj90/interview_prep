@@ -1,6 +1,6 @@
-# **HTML Elements Categorized Based on CSS Properties**
+### **HTML Elements Categorized Based on CSS Properties**
 
-HTML elements can be classified into different categories based on how CSS properties apply to them. Below is a structured list that groups HTML tags according to their styling behavior in CSS.
+HTML elements can be classified into different categories based on how CSS properties apply to them. 
 
 ---
 

@@ -14,3 +14,25 @@ function getObj(obj1, obj2) {
 getObj(obj1, obj2);
 
 // obj[item], { a: "" };
+
+
+
+
+
+
+
+
+
+user
+Base url:- localhost:3000/api/v1
+Create 
+  '/users' POST
+
+Update
+'/users' PUT
+
+Delete
+'/users' DELETE
+Read
+
+'/users' GET

@@ -335,3 +335,8 @@ Here’s a complete list of fundamental JavaScript interview questions covering 
 51. Explain how to **count the occurrences of a character** or substring in a string.
 52. Performance: `+` vs `concat()` vs template literals for string concatenation.
 53. What are **objects** in JavaScript, and how do you create them?
+
+
+
+
+

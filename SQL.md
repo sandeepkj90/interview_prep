@@ -420,3 +420,17 @@ WHERE o2.order_id IS NULL;
 ```
 
 ---
+
+// Input - “Pune”
+// Output - [“IL”, “Maharashtra”]
+
+let obj = {
+India: {
+Karnataka: ["Bangalore", "Mysore"],
+Maharashtra: ["Mumbai", "Pune"],
+},
+USA: {
+Texas: ["Dallas", "Houston"],
+IL: ["Chicago", "Aurora", "Pune"],
+},
+};

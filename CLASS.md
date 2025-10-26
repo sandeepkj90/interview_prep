@@ -135,3 +135,6 @@ This classification helps understand **which CSS properties** apply best to **di
 7. **Document Structure Elements** → Metadata properties (SEO, linking CSS).
 
 Would you like **code examples** for any specific category? 😊🚀
+
+
+Call the url using fetch and display the user list add the new user to the list using form

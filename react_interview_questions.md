@@ -223,7 +223,7 @@ Virtual DOM + diffing + referential equality
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 
-                          #Basic to advanced
+##Basic to advanced
 
 Understood.
 Below is a **COMPLETE, TOPIC-WISE, EXHAUSTIVE React.js interview question bank**, covering **beginner → senior → lead level**, **theory + practical + tricky + real-world**, with **nothing skipped**.
@@ -645,7 +645,9 @@ If interviewer asks **ANY React question**, it will fall into **one of these top
 
 
 
-                      #React Practical questions asked in interview
+##React Practical questions asked in interview
+
+
 
 Below is the **MOST COMPLETE, PRACTICAL, REAL-WORLD React.js CODING QUESTION LIST** you will ever see for interviews — **curated from actual senior-level interviews**.
 

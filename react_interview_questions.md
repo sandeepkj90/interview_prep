@@ -190,7 +190,6 @@ Virtual DOM + diffing + referential equality
 * Why StrictMode double renders?
 * Why useRef instead of useState?
 
----
 
 ## ⏱️ 60-MIN FINAL REVISION PLAN
 
@@ -209,7 +208,6 @@ Virtual DOM + diffing + referential equality
 * React 18
 * Real-world architecture questions
 
----
 
 ## 🎯 HOW TO ANSWER LIKE A SENIOR
 
@@ -223,8 +221,9 @@ Virtual DOM + diffing + referential equality
 
 
 --------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
 
-Basic to advanced
+                          #Basic to advanced
 
 Understood.
 Below is a **COMPLETE, TOPIC-WISE, EXHAUSTIVE React.js interview question bank**, covering **beginner → senior → lead level**, **theory + practical + tricky + real-world**, with **nothing skipped**.
@@ -633,3 +632,223 @@ If interviewer asks **ANY React question**, it will fall into **one of these top
 * Performance
 * Props & State
 * Real-world scenarios
+
+
+
+
+
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+
+
+
+
+
+
+                      #React Practical questions asked in interview
+
+Below is the **MOST COMPLETE, PRACTICAL, REAL-WORLD React.js CODING QUESTION LIST** you will ever see for interviews — **curated from actual senior-level interviews**.
+
+This list covers **UI logic, hooks, performance, architecture, and production scenarios**.
+If you prepare **these**, you will **not be surprised** in a React interview.
+
+---
+
+# 🔥 COMPLETE LIST: MOST ASKED REACT CODING PRACTICAL QUESTIONS
+
+## 🥇 LEVEL 1 – BASIC UI LOGIC (100% Asked)
+
+1. Counter (increment, decrement, reset)
+2. Show / Hide password
+3. Toggle theme (dark/light)
+4. Disable button after click
+5. Character counter (with max limit)
+6. Conditional rendering (login/logout)
+7. Controlled input field
+8. Uncontrolled input using `useRef`
+9. Checkbox select / deselect all
+10. Radio button selection
+
+---
+
+## 🥈 LEVEL 2 – FORMS & INPUT HANDLING (Very Common)
+
+11. Form with validation (email/password)
+12. Inline error messages
+13. Submit form & reset fields
+14. Multi-step form
+15. Dynamic form fields (add/remove)
+16. File upload with preview
+17. Debounce input field
+18. Throttle button click
+19. Search filter from input
+20. Auto-focus input on load
+
+---
+
+## 🥉 LEVEL 3 – LISTS & STATE MANAGEMENT (Extremely Common)
+
+21. Todo App (add/edit/delete/complete)
+22. Shopping cart (add/remove/update qty)
+23. Editable table
+24. Render list with unique keys
+25. Sort & filter list
+26. Pagination (client-side)
+27. Infinite scroll
+28. Drag & drop list (basic)
+29. Accordion / FAQ list
+30. Select dropdown with search
+
+---
+
+## 🏆 LEVEL 4 – API & SIDE EFFECTS (Senior Focus)
+
+31. Fetch API & show loader
+32. Error handling in API
+33. Retry failed API call
+34. Cancel API call on unmount
+35. Parallel API calls
+36. Dependent API calls
+37. Polling API (interval)
+38. WebSocket real-time updates
+39. Debounce API calls
+40. Cache API response
+
+---
+
+## 🧠 LEVEL 5 – HOOKS DEEP DIVE (High Value)
+
+41. Custom hook – `useFetch`
+42. Custom hook – `useDebounce`
+43. useEffect cleanup example
+44. useReducer counter
+45. useReducer form handling
+46. useRef vs useState example
+47. useMemo expensive calculation
+48. useCallback function optimization
+49. useContext example
+50. useLayoutEffect example
+
+---
+
+## ⚡ LEVEL 6 – PERFORMANCE OPTIMIZATION (Senior-Level)
+
+51. Prevent child re-render using `React.memo`
+52. Fix unnecessary re-renders
+53. Optimize large list rendering
+54. Lazy load component
+55. Code splitting
+56. Optimize dashboard widgets
+57. Avoid prop drilling
+58. Context re-render optimization
+59. Windowing / virtualization
+60. Measure render performance
+
+---
+
+## 🧩 LEVEL 7 – COMPONENT DESIGN & ARCHITECTURE
+
+61. Reusable button component
+62. Modal component
+63. Tooltip component
+64. Tabs component
+65. Accordion component
+66. Compound component pattern
+67. Higher Order Component (HOC)
+68. Render props pattern
+69. Controlled vs uncontrolled component
+70. Lifting state up example
+
+---
+
+## 🧪 LEVEL 8 – ERROR HANDLING & EDGE CASES
+
+71. Error boundary implementation
+72. Handle async errors
+73. Fallback UI
+74. Global error handling
+75. Retry UI on failure
+76. Handle empty state
+77. Loading skeleton
+78. Network offline handling
+79. Graceful degradation
+80. Race condition handling
+
+---
+
+## 🌍 LEVEL 9 – REAL-WORLD SCENARIOS (VERY IMPORTANT)
+
+81. Authentication flow (login/logout)
+82. Protected routes
+83. Role-based UI rendering
+84. Permission-based component
+85. Dashboard with multiple APIs
+86. Multi-language (i18n)
+87. Theme provider
+88. Global loader
+89. Notification / toast system
+90. App-level state management
+
+---
+
+## 🚀 LEVEL 10 – ADVANCED / IMPRESSIVE
+
+91. React Portal modal
+92. Forward refs example
+93. useImperativeHandle example
+94. Drag & drop (advanced)
+95. Server-side pagination
+96. SSR hydration issue fix
+97. Concurrent rendering example
+98. useTransition example
+99. Suspense with lazy loading
+100. Optimistic UI update
+
+---
+
+## 🚨 LEVEL 11 – TRICKY INTERVIEW CODING TASKS
+
+101. Why component re-renders?
+102. Fix infinite useEffect loop
+103. Why API called twice?
+104. Why memo not working?
+105. Why state update delayed?
+106. Fix stale closure bug
+107. Fix incorrect dependency array
+108. Fix key warning issue
+109. Optimize slow component
+110. Fix context performance issue
+
+---
+
+## ⏱️ LAST-MINUTE SENIOR INTERVIEW PLAN (1–2 HOURS)
+
+### Must Practice:
+
+* Todo App
+* Fetch API with loader & error
+* Custom hook
+* React.memo + useCallback
+* Context optimization
+* Modal via Portal
+
+---
+
+## 🎯 INTERVIEWER EXPECTATION (8+ Years)
+
+✔ Clean, readable code
+✔ Hooks only
+✔ Edge cases handled
+✔ Performance awareness
+✔ Explain trade-offs while coding
+
+---
+
+If you want next (highly recommended):
+
+* 🔥 **Solutions for top 20 coding questions**
+* 🧠 **Senior React coding cheat-sheet**
+* 💻 **Live coding simulation (hard mode)**
+* 🎯 **Frontend system design questions**
+
+Just tell me what you want — I’ll deliver immediately.

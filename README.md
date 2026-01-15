@@ -1,1296 +1,343 @@
+Here’s a complete list of fundamental JavaScript interview questions covering basic concepts:
+
+## **JavaScript's Interview Questions**
 ## Understanding `useState` in React.js (Basic to Advanced)
 
-React’s `useState` hook is fundamental for managing component state in functional components. It allows you to store, update, and manage local component states effectively.
+### **1. Introduction to JavaScript**
+
+1. What is **JavaScript**, and how does it differ from Java?
+2. Explain the difference between **interpreted** and **compiled languages**.
+3. What is the difference between **JavaScript** and **ECMAScript**?
+4. How do you write **comments** in JavaScript?
+5. Explain **execution context** in javascript, **event loop** works.
+6. What is a **callback queue**?
+7. How does the JavaScript **event loop** work?
+8. What is the difference between **macrotasks** and **microtasks**?
 
 ---
 
-## 1. **Basic Usage of `useState`**
+### **3. Variables & Scope**
 
-`useState` is a React Hook that allows functional components to have state variables.
-
-### **Syntax:**
-
-```jsx
-const [state, setState] = useState(initialValue);
-```
-
-- `state` → Current state value.
-- `setState` → Function to update the state.
-- `initialValue` → Initial state value.
-
-### **Example: Counter App**
-
-```jsx
-import React, { useState } from "react";
-
-const Counter = () => {
-	const [count, setCount] = useState(0);
-
-	return (
-		<div>
-			<h2>Count: {count}</h2>
-			<button onClick={() => setCount(count + 1)}>Increment</button>
-			<button onClick={() => setCount(count - 1)}>Decrement</button>
-		</div>
-	);
-};
-
-export default Counter;
-```
-
-#### **Explanation**
-
-- We initialize `count` to `0` using `useState(0)`.
-- `setCount` updates `count` when the buttons are clicked.
+9. What are the different ways to declare variables in JavaScript?
+10. What happens if you use a variable without declaring it in JavaScript?
+11. Explain the differences between `var`, `let`, and `const`
+12. What is **variable shadowing** in JavaScript?
+13. Explain the concept of **hoisting** in JavaScript.
+14. What is **scope** in JavaScript?
+15. What is the difference between **global scope**, **local scope**, and **block scope**?
+16. What is a **symbol** in JavaScript, and how is it used?
+17. What are JavaScript **truthy** and **falsy** values?
+18. Explain in detail the **lexical scope**.
 
 ---
 
-## 2. **Updating State Correctly**
+### **3. Data types**
 
-### **Updating State Based on Previous State**
-
-If the new state depends on the previous state, use the function form:
-
-```jsx
-setCount((prevCount) => prevCount + 1);
-```
-
-### **Example: Using Previous State Safely**
-
-```jsx
-<button onClick={() => setCount((prevCount) => prevCount + 1)}>
-	Increment
-</button>
-```
-
-This ensures that `setCount` always uses the latest state, avoiding potential race conditions.
+19. What is the difference between **primitives** and **reference types** in JavaScript?
+20. What are the different **data types** in JavaScript?
+21. What is the difference between **static** and **dynamic** typing?
+22. How does JavaScript handle automatic type conversion?
+23. What is the difference between **loosely typed** and **strongly typed** languages?
+24. What is the difference between `typeof` and `instanceof` operators?
+25. What is the difference between `null` and `undefined`?
+26. Explain the `typeof` operator with examples.
 
 ---
 
-## 3. **Using Objects in `useState`**
+### **4. Basics of JavaScript**
 
-### **Example: Managing Object State**
-
-```jsx
-import React, { useState } from "react";
-
-const UserProfile = () => {
-	const [user, setUser] = useState({ name: "John", age: 25 });
-
-	return (
-		<div>
-			<h2>Name: {user.name}</h2>
-			<h2>Age: {user.age}</h2>
-			<button onClick={() => setUser({ ...user, age: user.age + 1 })}>
-				Increase Age
-			</button>
-		</div>
-	);
-};
-
-export default UserProfile;
-```
-
-#### **Explanation**
-
-- The `user` object contains `name` and `age`.
-- `setUser({ ...user, age: user.age + 1 })` updates the `age` while preserving other properties.
-
-**⚠️ Common Mistake:**  
-Directly updating state like `setUser({ age: user.age + 1 })` **removes** the `name` property.
+27. What is the purpose of **strict mode** (`"use strict"`) in JavaScript?
+28. How does JavaScript handle **memory allocation**?
+29. What is **garbage collection** in JavaScript?
+30. What are **memory leaks** in JavaScript, and how can they be prevented?
+31. Explain the **call stack** in JavaScript.
+32. How do you detect and fix **memory leaks** in JavaScript applications?
 
 ---
 
-## 4. **Using Arrays in `useState`**
+### **5. Operators**
 
-### **Example: Managing a List of Items**
-
-```jsx
-import React, { useState } from "react";
-
-const TodoList = () => {
-	const [tasks, setTasks] = useState(["Task 1", "Task 2"]);
-
-	const addTask = () => {
-		setTasks([...tasks, `Task ${tasks.length + 1}`]);
-	};
-
-	return (
-		<div>
-			<ul>
-				{tasks.map((task, index) => (
-					<li key={index}>{task}</li>
-				))}
-			</ul>
-			<button onClick={addTask}>Add Task</button>
-		</div>
-	);
-};
-
-export default TodoList;
-```
-
-#### **Explanation**
-
-- The `tasks` array holds task items.
-- `setTasks([...tasks, newTask])` adds a new task while keeping existing ones.
+33. What are the different types of operators in JavaScript?
+34. Explain the difference between `==` and `===`.
+35. What is the difference between prefix and postfix increment (`++i` vs `i++`)?
+36. How does the ternary (`? :`) operator work?
+37. What are **bitwise operators** in JavaScript, and how do they work?
+38. What is the `??` (Nullish Coalescing Operator) in JavaScript?
+39. What is the difference between `&&`, `||`, and `!` operators?
+40. What is the **spread (`...`) operator**?
+41. What is the **rest parameter**?
 
 ---
 
-## 5. **Handling State with Forms**
+### **6. Control Flow & Loops**
 
-### **Example: Controlled Input**
-
-```jsx
-import React, { useState } from "react";
-
-const FormExample = () => {
-	const [name, setName] = useState("");
-
-	return (
-		<div>
-			<input
-				type="text"
-				value={name}
-				onChange={(e) => setName(e.target.value)}
-			/>
-			<p>Your Name: {name}</p>
-		</div>
-	);
-};
-
-export default FormExample;
-```
-
-#### **Explanation**
-
-- The input field updates `name` state as the user types.
+42. What is the difference between `for`, `for..of` and `forEach()` loops in terms of performance?
+43. What is the difference between `switch` and `if-else` statements?
+44. What is the difference between `while` and `do...while` loops? Provide examples.
+45. When would you use a `for` loop over a `while` loop?
+46. What does the `break` statement do in a loop?
+47. Explain the `continue` statement with an example.
+48. How can you exit all loops in a nested loop scenario?
+49. What are `for...in` and `for...of` loops? How do they differ?
+50. How does `forEach` differ from `for` loop?
+51. Explain the difference between **synchronous** and **asynchronous** control flow.
+52. How does **closure it affect loop behavior** in JavaScript?
+53. How can you optimize loops for performance in JavaScript?
+54. Write a `for` loop that skips numbers divisible by 3 but stops if a number is divisible by 7.
+55. How can you **debounce a function** in a loop scenario?
 
 ---
 
-## 6. **Multiple State Variables**
+### **7. Functions with Scopes**
 
-You can use multiple `useState` hooks in the same component.
-
-### **Example: Managing Multiple States**
-
-```jsx
-const UserInfo = () => {
-	const [name, setName] = useState("John");
-	const [age, setAge] = useState(25);
-
-	return (
-		<div>
-			<h2>
-				{name}, {age} years old
-			</h2>
-			<button onClick={() => setAge(age + 1)}>Increase Age</button>
-		</div>
-	);
-};
-```
-
-Each `useState` manages a different state variable.
-
----
-
-## 7. **Lazy Initialization in `useState`**
-
-If the initial state is expensive to compute, use a function:
-
-```jsx
-const [count, setCount] = useState(() => {
-	console.log("Initializing state...");
-	return 0;
-});
-```
-
-The function runs only once on initial render.
+56. What is the difference between **function expressions** and **function declarations**?
+57. What are **arrow functions**, and how do they differ from regular functions?
+58. How does `this` keyword behave differently in arrow functions?
+59. What is an **IIFE** (Immediately Invoked Function Expression), and why is it used?
+60. What is the difference between function **declaration** and function **expression**?
+61. What is the difference between a **parameter** and an **argument**?
+62. How does JavaScript handle **function hoisting**?
+63. What is **function currying**, and how does it work?
+64. How does JavaScript handle **recursion**?
+65. What is the difference between **default parameters** and **rest parameters**?
+66. How do you handle function **overloading** in JavaScript?
+67. What is the difference between `.call()`, `.apply()`, and `.bind()`?
+68. What are **closures** in JavaScript? Give an example.
+69. How do closures affect **memory usage**?
+70. What is **lexical scope**?
+71. What are **anonymous functions**, and where are they used?
+72. What is **memoization**, and how can it optimize function performance?
+73. How does the `this` keyword work in JavaScript?
+74. How does the **rest parameter** differ from **arguments** objects?
+75. What is **method chaining**, and how does it work?
 
 ---
 
-## 8. **Using `useState` with Async Operations**
+### **8. Array and its methods**
 
-State updates in React are asynchronous.
-
-### **Incorrect Example**
-
-```jsx
-const handleClick = () => {
-	setCount(count + 1);
-	console.log(count); // Might log the old state
-};
-```
-
-### **Correct Example**
-
-```jsx
-const handleClick = () => {
-	setCount((prevCount) => prevCount + 1);
-	console.log(count); // Still logs old state due to async update
-};
-```
-
-Use `useEffect` if you need to react to state updates.
-
----
-
-## 9. **Clearing or Resetting State**
-
-To reset state to its initial value:
-
-```jsx
-const reset = () => {
-	setCount(0);
-};
-```
-
-This is useful in forms:
-
-```jsx
-const resetForm = () => {
-	setUser({ name: "", age: 0 });
-};
-```
+76. What are different ways to create an array in JavaScript?
+77. What is the difference between **Array.forEach()**, **Array.map()**, and **Array.reduce()**?
+78. How do you **remove duplicates** from an array?
+79. What is the difference between **splice()** and **slice()**?
+80. What is the difference between **push()**, **pop()**, **shift()**, and **unshift()**?
+81. How does **find()** differ from **filter()**?
+82. How do you **merge two arrays** without duplicates?
+83. What is **array destructuring**, and how does it work?
+84. How do you check if a variable is an array?
+85. What is the difference between an **array** and an **object**?
+86. What is **destructuring**, and how does it work with arrays?
+87. What is the difference between **.forEach()**, **.map()**, and **.filter()**?
+88. What are **higher-order functions**?
+89. What is the difference between **.find()** and **.findIndex()**?
+90. How do you **convert an array** to a string?
+91. What is the difference between **.sort()** and **.reverse()**?
+92. What is the **reduce()** method, and how does it work?
+93. How do **Set** and **Map** differ from Arrays and Objects?
+94. How do you efficiently **flatten** a multi-dimensional array?
+95. What is the purpose of **Array.prototype.every()** and **Array.prototype.some()**?
+96. What is the difference between **.indexOf()** and **.includes()**?
+97. Explain **default parameters** in JavaScript functions.
+98. What is the **immutability** concept in javascript?
+99. Write a function that **reverses an array** using a loop.
+100.  Implement a function that **counts the frequency of elements** in an array using loops.
 
 ---
 
-## 10. **Performance Optimization: Avoiding Unnecessary Renders**
+### **9. Strings and methods**
 
-React re-renders a component whenever `useState` updates. If the new state is the same as the old state, React skips rendering.
-
-### **Example**
-
-```jsx
-setCount(count); // No re-render if count hasn't changed
-```
-
-**Optimized Example**
-
-```jsx
-setCount((prevCount) => (prevCount === 10 ? prevCount : prevCount + 1));
-```
-
----
-
-## Summary
-
-| Concept             | Example                                     |
-| ------------------- | ------------------------------------------- |
-| Basic State         | `const [count, setCount] = useState(0);`    |
-| Object State        | `setUser({ ...user, age: user.age + 1 });`  |
-| Array State         | `setTasks([...tasks, "New Task"]);`         |
-| Controlled Inputs   | `onChange={(e) => setName(e.target.value)}` |
-| Multiple States     | `const [name, setName] = useState("");`     |
-| Lazy Initialization | `useState(() => computeInitialValue());`    |
-| Functional Updates  | `setCount(prev => prev + 1);`               |
-| Resetting State     | `setCount(0);`                              |
+101. How can you **access individual characters** of a string?
+102. Explain the difference between **single quotes**, **double quotes**, and **template literals** in strings.
+103. What is the purpose of `indexOf()` and `lastIndexOf()`?
+104. How do you extract a part of a string using `slice()`, `substring()`, and `substr()`?
+105. Explain **string immutability** in JavaScript.
+106. How can you split a string into an array using `split()`?
+107. How do you replace parts of a string using `replace()` and `replaceAll()`?
+108. How to repeat a string multiple times using `repeat()`?
+109. How can you check if a string starts or ends with a specific substring?
+110. How to **reverse a string** in JavaScript?
+111. What are **template literals**? Explain string interpolation.
+112. What are **regular expressions** in JavaScript? How do you declare them?
+113. Explain common regex methods: `test()`, `exec()`, `match()`, and `matchAll()`.
+114. How do you perform a **global search** with regex? Explain flags like `g`, `i`, `m`.
+115. How to **validate an email** or **phone number** using regex?
+116. Explain how to **count the occurrences of a character** or substring in a string.
+117. What is the difference between **primitive strings** and **String** objects?
+118. Performance: `+` vs `concat()` vs template literals for string concatenation.
+119. Why should you avoid using `new String()`?
+120. Explain how **garbage collection** works for strings in JavaScript.
+121. How can you make **string operations faster** in large-scale applications?
 
 ---
 
-## Conclusion
+### **10. Objects in details**
 
-- `useState` is essential for managing local component state in React.
-- Always use functional updates when state depends on the previous state.
-- Preserve object and array states using the spread operator (`...`).
-- Use `useState` effectively with forms, lists, and asynchronous logic.
-
-Would you like an advanced real-world example, such as managing a complex form with validation? 🚀
-
-### How Does a `useState` Variable Retain Data Between Renders in React?
-
-When a React component re-renders, its function body runs again from top to bottom. However, `useState` variables **persist** across re-renders instead of resetting to their initial values. This happens because React **remembers** state variables between renders using the **React Virtual DOM and React Fiber architecture**.
-
----
-
-## **1. Understanding Function Component Re-Renders**
-
-A React functional component is essentially a function that:
-
-1. Runs when the component mounts (initial render).
-2. Runs again when state or props change (re-render).
-3. Returns JSX (UI elements).
-
-### Example (Without `useState`):
-
-```jsx
-const Counter = () => {
-	let count = 0;
-
-	const increment = () => {
-		count += 1;
-		console.log("Updated Count:", count);
-	};
-
-	return <button onClick={increment}>Click Me</button>;
-};
-
-export default Counter;
-```
-
-#### **Issue**
-
-- Each time `increment` is called, `count` is updated **but resets to `0`** on re-render.
-- The variable does **not persist** across renders.
+122. What are **objects** in JavaScript, and how do you create them?
+123. What are the different ways to access object properties?
+124. How do you iterate over an object’s properties?
+125. What is the difference between **pass by value** and **pass by reference**?
+126. What is the difference between object literals and constructor functions?
+127. What is the **hasOwnProperty()** method used for?
+128. How do you prevent modification of an object in JavaScript?
+129. What is the difference between **Object.freeze()**, **Object.seal()**, and **Object.assign()**?
+130. What is the difference between **Object.keys()**, **Object.values()**, and **Object.entries()**?
+131. What is the difference between **shallow copy** and **deep copy**?
+132. What is **memoization**, and how is it implemented in JavaScript?
+133. What is object **destructuring**, and how does it work?
+134. What is **prototype-based inheritance**?
+135. How does the `Object.create()` method work?
+136. How does **optional chaining (`?.`)** work in JavaScript?
+137. Explain **prototype inheritance** in JavaScript.
+138. What is the **Object.create()** method used for?
+139. What is **prototype chaining**, and how does it work?
+140. What is **lazy evaluation**, and how can it be used in JavaScript?
+141. What is the difference between a **factory function** and a **constructor function**?
+142. How do you implement an **immutable object** in JavaScript?
+143. Explain the difference between **map** and **set**.
 
 ---
 
-## **2. How `useState` Retains Data**
+### **11. ES6+ features in details**
 
-React internally **stores state variables separately from the component function**.
-
-### Example (With `useState`):
-
-```jsx
-import React, { useState } from "react";
-
-const Counter = () => {
-	const [count, setCount] = useState(0);
-
-	const increment = () => {
-		setCount((prev) => prev + 1);
-		console.log("Updated Count:", count);
-	};
-
-	return <button onClick={increment}>Click Me</button>;
-};
-
-export default Counter;
-```
-
-#### **Why `count` Persists Across Renders?**
-
-1. When `useState(0)` is called for the first time, React **stores `count` separately** in a special memory structure linked to the component.
-2. On a re-render:
-   - React does **not** reinitialize `useState(0)`.
-   - It **retrieves the stored value** from memory.
-   - `count` retains its updated value instead of resetting.
+144. What are ES6 modules, and how do you use `import` and `export`?
+145. What are **spread (`...`) and rest parameters (`...`)** in JavaScript?
+146. What is **optional chaining (`?.`)**, and how does it work?
+147. What is the difference between **default export** and **named exports**?
+148. How do JavaScript **modules** work (**import** and **export**)?
 
 ---
 
-## **3. How React Internally Manages `useState`**
+### **12. Asynchorunous Programming**
 
-React maintains state across renders using an **internal state array** associated with each component.
-
-### **Simplified Internal Working**
-
-- React maintains an **array of state values** for each component.
-- When `useState()` is called:
-  - It assigns a **slot** in the array.
-  - Returns the stored state from the correct slot.
-  - Updates this slot when `setState` is called.
-
-#### **Example Breakdown**
-
-```jsx
-const Counter = () => {
-	const [count, setCount] = useState(0);
-	const [message, setMessage] = useState("Hello");
-
-	return <button onClick={() => setCount(count + 1)}>Click</button>;
-};
-```
-
-Internally, React maintains:
-
-```
-Component State Storage:
-[
-  [0, setCount],       // count state at index 0
-  ["Hello", setMessage] // message state at index 1
-]
-```
-
-Each time the component re-renders, React ensures it retrieves the **correct** state from this array instead of reinitializing it.
+149. What is the difference between **synchronous** and **asynchronous** JavaScript?
+150. Explain **callback functions** in JavaScript.list down the use cases.
+151. What is **callback hell**? How to avoid it.
+152. What are `Promises`, and how do they work? explain with examples?
+153. What is `Promise.all()`, `Promise.any()`, and `Promise.race()`?
+154. What is `Promise.all()`, `Promise.allSettled()`?
+155. Explain **Promise chaining** concept with example.
+156. What are `async` and `await`, and how do they simplify promises?
+157. What are the advantages of using `async/await` over Promises?
+158. What happens if an error occurs inside an `async` function?
+159. What is `setTimeout` and `setInterval`?
+160. What is the difference between `setTimeout()` and `setImmediate()`?
+161. How do you implement a **retry mechanism** for failed API requests?
+162. How do you **throttle** or **debounce** an API request?
+163. How does **debouncing and throttling** improve app performance?
+164. How do you securely **store API keys** in a front-end JavaScript application?
+165. How do you **handle errors** in asynchronous JavaScript?
+166. What is the `fetch()` API, and how does it compare to `XMLHttpRequest`?
 
 ---
 
-## **4. What Happens on Re-Render?**
+### **13. Error Handling and Debugging**
 
-When `setState` is called:
-
-1. React schedules a **re-render** of the component.
-2. The component **re-executes** as a function.
-3. `useState` retrieves the **previous** state value from React’s internal memory.
-4. The UI updates with the new state.
-
-### **Example: Step-by-Step Execution**
-
-```jsx
-const Counter = () => {
-	const [count, setCount] = useState(0);
-
-	console.log("Component Rendered: Count =", count);
-
-	return <button onClick={() => setCount(count + 1)}>Increment</button>;
-};
-```
-
-#### **Console Output for Each Click**
-
-```
-Component Rendered: Count = 0  // Initial Render
-Component Rendered: Count = 1  // After 1st Click
-Component Rendered: Count = 2  // After 2nd Click
-```
-
-Even though the function **re-executes**, `count` is remembered between renders.
+167. How do you **handle errors** in JavaScript?
+168. What is a **try...catch** statement?
+169. What is the purpose of **finally** in error handling?
+170. How do you **create custom errors** in JavaScript?
+171. What is the **console.time()** method used for?
+172. What is the difference between **console.log()** and **console.error()**?
+173. What are different **types of errors** in JavaScript?
+174. How do you use **debugger** in JavaScript?
+175. How do you **handle uncaught exceptions** in JavaScript?
+176. How does **throw** work in JavaScript?
 
 ---
 
-## **5. Key Takeaways**
+### **14. Miscellaneous**
 
-### ✅ **Why Does `useState` Persist Across Renders?**
-
-- React **remembers state separately** from the function execution.
-- `useState` stores state **outside** the function’s execution scope.
-- React maintains a **linked list of state hooks** internally (React Fiber).
-- On re-render, React **retrieves the correct state value** rather than reinitializing it.
-
-### ❌ **Why Does a Normal Variable Reset?**
-
-- Variables declared inside the function **lose their values** when the function re-executes.
-- They exist only during the function’s execution, and React does **not** store them.
+177. What is **JSON**, and how do you parse and stringify it in JavaScript?
+178. What is **lazy loading**, and how does it improve performance?
+179. What is the difference between **async and defer** in script loading?
+180. What are **web workers**, and how do they improve performance?
+181. What is **Gzip compression**, and how does it affect JavaScript loading?
+182. How do you optimize **loops and iterations** in JavaScript?
+183. What is **CORS (Cross-Origin Resource Sharing)**?
+184. Explain **design pattern** in javascript.
 
 ---
 
-## **6. Common Myths**
+### **15. DOM Manipulation**
 
-❌ **"useState updates immediately."**  
-✅ No, `useState` updates **asynchronously** and schedules a re-render.
-
-❌ **"Calling `useState` again inside the component resets the state."**  
-✅ No, React **remembers state** across renders and does not reinitialize.
-
-❌ **"State is stored inside the component function."**  
-✅ No, state is stored **outside the function** in React’s internal structures.
-
----
-
-## **7. Advanced Concept: State Persistence Across Component Unmount**
-
-When a component **unmounts**, its state is removed. However, if the component **remounts**, it starts fresh.
-
-### **Example**
-
-```jsx
-const App = () => {
-	const [show, setShow] = useState(true);
-
-	return (
-		<div>
-			<button onClick={() => setShow(!show)}>Toggle Counter</button>
-			{show && <Counter />}
-		</div>
-	);
-};
-
-const Counter = () => {
-	const [count, setCount] = useState(0);
-
-	return <button onClick={() => setCount(count + 1)}>Count: {count}</button>;
-};
-```
-
-#### **What Happens?**
-
-- Clicking **Toggle Counter** removes `Counter` → state is lost.
-- Clicking **Toggle Counter** again remounts `Counter` → state resets to `0`.
+185. What is event delegation?
+186. How does event **bubbling** and **capturing** work?
+187. What is the **DOM (Document Object Model)**?
+188. What is the difference between `querySelector()` and `getElementById()`?
+189. How do you **add**, **remove**, and **modify** elements in the DOM?
+190. What is **event delegation**, and how does it work?
+191. What is `localStorage`, `sessionStorage`, and `cookies`?
+192. How do you handle events in JavaScript (`addEventListener()`)?
+193. What is the difference between `e.target` and `e.currentTarget`?
+194. What is the **history** API in JavaScript?
+195. How do you detect if an element is in the viewport?
+196. How do you prevent the default behavior of an event?
 
 ---
 
-## **Final Summary**
+### **16. JavaScript Design Patterns & Best Practices**
 
-| Concept             | Explanation                                                              |
-| ------------------- | ------------------------------------------------------------------------ |
-| Function re-renders | Every time state changes, the function **re-executes**.                  |
-| Why state persists  | `useState` stores values **outside** the function scope.                 |
-| React internals     | Uses an **array of state slots** and retrieves correct values.           |
-| When state resets   | Only if the component **unmounts** and remounts.                         |
-| Normal variables    | Lost on re-render because they exist **only within function execution**. |
-
----
-
-## **Want to Go Deeper?**
-
-Would you like an example demonstrating how **React Fiber** manages state internally, or how `useRef` differs from `useState` in retaining values across renders? 🚀
-
-### **Deep Dive: How React Fiber Manages `useState` & How `useRef` Differs**
-
-Now that we understand how `useState` persists across renders, let’s explore:
-
-1. **How React Fiber internally manages state**
-2. **Why `useRef` retains values without causing re-renders**
-3. **Differences between `useState` and `useRef`**
+197. What is the **module pattern**, and how does it work in JavaScript?
+198. What is the **observer pattern**, and how is it implemented?
+199. What is the **singleton pattern**, and when should it be used?
+200. What is the difference between the **Factory pattern** and **Builder pattern**?
+201. How do you implement a **state management system** in vanilla JavaScript?
+202. What are **best practices for writing maintainable JavaScript code**?
 
 ---
 
-## **1. React Fiber & How It Manages `useState`**
+## **2. First Priority Interview Questions**
+
+5. Explain **execution context** in javascript, **event loop** works.
+6. What is the difference between **macrotasks** and **microtasks**?
+7. What is a **symbol** in JavaScript, and how is it used?
+8. Explain the difference between **interpreted** and **compiled languages**.
+9. What are JavaScript **truthy** and **falsy** values?
+10. Explain in detail the **lexical scope**.
+11. What is the difference between **loosely typed** and **strongly typed** languages?
+12. What is the purpose of **strict mode** (`"use strict"`) in JavaScript?
+13. How does JavaScript handle **memory allocation**?
+14. What is **garbage collection** in JavaScript?
+15. What are **memory leaks** in JavaScript, and how can they be prevented?
+16. What is the **spread (`...`) operator**?
+17. What is the **rest parameter**?
+18. What is the difference between `for`, `for..of` and `forEach()` loops in terms of performance?
+19. What are `for...in` and `for...of` loops? How do they differ?
+20. How does **closure it affect loop behavior** in JavaScript?
+21. How can you optimize loops for performance in JavaScript?
+22. How can you **debounce a function** in a loop scenario?
+23. What are **arrow functions**, and how do they differ from regular functions?
+24. How does `this` keyword behave differently in arrow functions?
+25. What is an **IIFE** (Immediately Invoked Function Expression), and why is it used?
+26. What is the difference between a **parameter** and an **argument**?
+27. What is **function currying**, and how does it work?
+28. How does JavaScript handle **recursion**?
+29. What is the difference between `.call()`, `.apply()`, and `.bind()`?
+30. What are **closures** in JavaScript? Give an example.
+31. How do closures affect **memory usage**?
+32. What is **memoization**, and how can it optimize function performance?
+33. What is **method chaining**, and how does it work?
+34. How do you **remove duplicates** from an array?
+35. What is the difference between **splice()** and **slice()**?
+36. How does **find()** differ from **filter()**?
+37. What is **array destructuring**, and how does it work?
+38. How do you check if a variable is an array?
+39. What is the difference between an **array** and an **object**?
+40. What is the difference between **.forEach()**, **.map()**, and **.filter()**?
+41. What is the difference between **.find()** and **.findIndex()**?
+42. What is the **reduce()** method, and how does it work?
+43. How do **Set** and **Map** differ from Arrays and Objects?
+44. How do you efficiently **flatten** a multi-dimensional array?
+45. Explain **default parameters** in JavaScript functions.
+46. How to repeat a string multiple times using `repeat()`?
+47. What are **regular expressions** in JavaScript? How do you declare them?
+48. Explain common regex methods: `test()`, `exec()`, `match()`, and `matchAll()`.
+49. How do you perform a **global search** with regex? Explain flags like `g`, `i`, `m`.
+50. How to **validate an email** or **phone number** using regex?
+51. Explain how to **count the occurrences of a character** or substring in a string.
+52. Performance: `+` vs `concat()` vs template literals for string concatenation.
+53. What are **objects** in JavaScript, and how do you create them?
 
-React uses **Fiber Reconciliation**, an advanced algorithm that keeps track of component updates efficiently. Each component has a **Fiber Node**, which stores information about the component, including its **state**.
 
-### **How Fiber Works with `useState`**
 
-- When a component is first rendered, React **creates a Fiber Node** and assigns it an internal **state queue** (linked list).
-- When `setState` is called, the **new state is added to this queue**.
-- During reconciliation, React **picks the latest state from the queue** and updates the component.
 
-### **Visualizing Fiber's State Storage**
 
-#### **Example Component**
-
-```jsx
-const Counter = () => {
-	const [count, setCount] = useState(0);
-	return <button onClick={() => setCount(count + 1)}>Count: {count}</button>;
-};
-```
-
-#### **How React Fiber Manages This Internally**
-
-```
-Fiber Node for Counter Component
----------------------------------
-|   state: 0  (initial)        |
-|   stateQueue: [] (empty)     |
----------------------------------
-
-1st Click: setCount(count + 1)
----------------------------------
-|   state: 1  (updated)        |
-|   stateQueue: [1]            |
----------------------------------
-
-2nd Click: setCount(count + 1)
----------------------------------
-|   state: 2  (updated)        |
-|   stateQueue: [2]            |
----------------------------------
-```
-
-**Key Takeaways:**
-
-- `setState` updates are stored in a queue and applied in order.
-- React keeps track of the state **outside the function execution** in the Fiber Tree.
-- This prevents state from resetting when the function re-executes.
-
----
-
-## **2. How `useRef` Retains Values Without Re-Renders**
-
-Unlike `useState`, which causes re-renders when updated, `useRef` **persists values between renders without causing re-renders**.
-
-### **Syntax**
-
-```jsx
-const ref = useRef(initialValue);
-```
-
-- `ref.current` holds the value, which persists across renders.
-- Updating `ref.current` **does not trigger a re-render**.
-
-### **Example: Comparing `useState` vs. `useRef`**
-
-```jsx
-import React, { useState, useRef } from "react";
-
-const Example = () => {
-	const [count, setCount] = useState(0);
-	const renderCount = useRef(0);
-
-	renderCount.current += 1;
-
-	return (
-		<div>
-			<h2>Count: {count}</h2>
-			<h3>Component Re-renders: {renderCount.current}</h3>
-			<button onClick={() => setCount(count + 1)}>Increment</button>
-		</div>
-	);
-};
-
-export default Example;
-```
-
-### **How This Works**
-
-1. **`useState` causes re-renders**
-
-   - Clicking **Increment** updates `count`, triggering a re-render.
-
-2. **`useRef` persists but doesn’t trigger re-renders**
-   - `renderCount.current` increments **but does not cause a re-render**.
-   - This is why `renderCount` always reflects the actual number of renders.
-
----
-
-## **3. Key Differences Between `useState` and `useRef`**
-
-| Feature                           | `useState`                      | `useRef`                                     |
-| --------------------------------- | ------------------------------- | -------------------------------------------- |
-| **Triggers Re-renders**           | ✅ Yes (on update)              | ❌ No (persists value silently)              |
-| **Stores Values Between Renders** | ✅ Yes                          | ✅ Yes                                       |
-| **Causes Component Re-render?**   | ✅ Yes                          | ❌ No                                        |
-| **When to Use?**                  | When UI should update on change | When value should persist without re-renders |
-
-### **When to Use `useRef` Instead of `useState`?**
-
-1. **Tracking Previous State Without Re-renders**
-
-   ```jsx
-   const prevCount = useRef(count);
-   useEffect(() => {
-   	prevCount.current = count;
-   }, [count]);
-   ```
-
-   - This saves the **previous count value** while avoiding unnecessary re-renders.
-
-2. **Handling DOM Elements Without State**
-   ```jsx
-   const inputRef = useRef();
-   <input ref={inputRef} />;
-   ```
-   - `useRef` is perfect for **accessing DOM elements** without causing re-renders.
-
----
-
-## **Conclusion**
-
-- React **stores state outside component functions** via **Fiber’s state queue**.
-- `useState` persists across renders **by storing values in Fiber Nodes**.
-- `useRef` retains values **without triggering re-renders** (ideal for tracking non-UI data).
-
----
-
-## **Would You Like to See a Real-World Example Using `useRef` and `useState` Together? 🚀**
-
-### **Real-World Example: Using `useState` and `useRef` Together** 🚀
-
-In this example, we’ll create a **Stopwatch App** that demonstrates:  
-✅ Using `useState` to **update the UI** dynamically.  
-✅ Using `useRef` to **persist values without causing re-renders** (e.g., tracking elapsed time).
-
----
-
-## **📌 Goal: Build a Stopwatch with Start, Pause, and Reset**
-
-### **Features**
-
-- `useState` → Updates displayed time.
-- `useRef` → Stores the interval ID and elapsed time **without re-rendering**.
-
----
-
-### **📝 Stopwatch Code**
-
-```jsx
-import React, { useState, useRef } from "react";
-
-const Stopwatch = () => {
-	const [time, setTime] = useState(0); // Displayed time (causes re-renders)
-	const intervalRef = useRef(null); // Stores interval ID (persists without re-renders)
-	const startTimeRef = useRef(0); // Stores starting timestamp
-
-	const startTimer = () => {
-		if (!intervalRef.current) {
-			startTimeRef.current = Date.now() - time; // Adjust start time for resume
-			intervalRef.current = setInterval(() => {
-				setTime(Date.now() - startTimeRef.current); // Update displayed time
-			}, 100);
-		}
-	};
-
-	const pauseTimer = () => {
-		clearInterval(intervalRef.current);
-		intervalRef.current = null; // Reset interval reference
-	};
-
-	const resetTimer = () => {
-		clearInterval(intervalRef.current);
-		intervalRef.current = null;
-		setTime(0); // Reset displayed time
-		startTimeRef.current = 0; // Reset stored timestamp
-	};
-
-	return (
-		<div style={{ textAlign: "center", fontSize: "24px" }}>
-			<h1>Stopwatch</h1>
-			<h2>{(time / 1000).toFixed(1)}s</h2>
-			<button onClick={startTimer}>Start</button>
-			<button onClick={pauseTimer}>Pause</button>
-			<button onClick={resetTimer}>Reset</button>
-		</div>
-	);
-};
-
-export default Stopwatch;
-```
-
----
-
-### **🔍 How It Works**
-
-| Feature                            | `useState`                            | `useRef`                                |
-| ---------------------------------- | ------------------------------------- | --------------------------------------- |
-| **Updates the UI**                 | ✅ `setTime()` triggers a re-render   | ❌ `intervalRef` persists silently      |
-| **Stores the interval ID**         | ❌ Would cause unnecessary re-renders | ✅ `useRef` prevents extra re-renders   |
-| **Keeps elapsed time when paused** | ✅ Time updates dynamically           | ✅ `startTimeRef` stores last timestamp |
-
----
-
-### **✨ Key Benefits of Using `useState` & `useRef` Together**
-
-✅ **Smooth UI Updates:** `useState` ensures the displayed time updates when needed.  
-✅ **No Unnecessary Re-renders:** `useRef` prevents infinite re-renders by storing the interval.  
-✅ **Accurate Timekeeping:** By tracking `startTimeRef`, we correctly resume timing after pausing.
-
----
-
-## **🔥 Next Steps: Would You Like to Add Lap Timing or Save Times? 🚀**
-
-### **What Does "React Re-renders a Component" Mean?**
-
-When we say **"React re-renders a component"**, it means:
-
-1. The component **function executes again**.
-2. React **recalculates JSX** and updates the **Virtual DOM**.
-3. React **compares the new Virtual DOM with the previous one (diffing algorithm)**.
-4. React updates **only the changed parts** in the real DOM (efficient reconciliation).
-
----
-
-### **🔍 Example: Re-rendering in Action**
-
-```jsx
-import React, { useState } from "react";
-
-const Counter = () => {
-	console.log("Component Re-rendered!"); // Logs every time the component renders
-
-	const [count, setCount] = useState(0);
-
-	return (
-		<div>
-			<h2>Count: {count}</h2>
-			<button onClick={() => setCount(count + 1)}>Increment</button>
-		</div>
-	);
-};
-
-export default Counter;
-```
-
-### **🛠 What Happens When You Click "Increment"?**
-
-1. `setCount(count + 1)` updates **state**.
-2. React **detects state change** → **triggers re-render**.
-3. **The entire function re-executes**, logging `"Component Re-rendered!"`.
-4. React **updates Virtual DOM** with the new `count` value.
-5. React **compares old vs. new Virtual DOM** (diffing).
-6. React **updates only `<h2>Count: X</h2>`** in the Real DOM (efficient).
-
----
-
-### **🔄 How Does React Optimize Re-renders?**
-
-✅ **Virtual DOM:** Prevents unnecessary real DOM updates.  
-✅ **Diffing Algorithm:** Only updates changed parts of the UI.  
-✅ **Reconciliation:** Ensures fast UI updates without redrawing everything.
-
----
-
-### **🚀 Next Steps**
-
-Would you like to explore **why unnecessary re-renders happen** and **how to prevent them using `React.memo`, `useMemo`, and `useCallback`?** 😊
-
-### **How Does `useMemo` Help with Re-renders?**
-
-`useMemo` **optimizes performance by memoizing expensive calculations**, so they **don’t recompute on every re-render** unless dependencies change.
-
----
-
-### **🔍 Problem: Unnecessary Expensive Calculations**
-
-Consider a **slow function** that runs every time the component re-renders:
-
-```jsx
-import React, { useState } from "react";
-
-const slowFunction = (num) => {
-	console.log("Running slow function...");
-	for (let i = 0; i < 1e9; i++) {} // Simulating a heavy computation
-	return num * 2;
-};
-
-const App = () => {
-	const [count, setCount] = useState(0);
-	const [theme, setTheme] = useState("light");
-
-	const result = slowFunction(count); // 🛑 Runs every re-render, even when only theme changes!
-
-	return (
-		<div>
-			<h2>Count: {count}</h2>
-			<h3>Result: {result}</h3>
-			<button onClick={() => setCount(count + 1)}>Increment</button>
-			<button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-				Toggle Theme
-			</button>
-		</div>
-	);
-};
-
-export default App;
-```
-
-### **🚨 Problem Here**
-
-- Clicking **"Toggle Theme"** should NOT recompute `slowFunction`, but it does!
-- `slowFunction(count)` **runs on every re-render** (even when only `theme` changes).
-
----
-
-### **✅ Solution: Use `useMemo` to Memoize the Expensive Computation**
-
-```jsx
-import React, { useState, useMemo } from "react";
-
-const slowFunction = (num) => {
-	console.log("Running slow function...");
-	for (let i = 0; i < 1e9; i++) {} // Simulating a heavy computation
-	return num * 2;
-};
-
-const App = () => {
-	const [count, setCount] = useState(0);
-	const [theme, setTheme] = useState("light");
-
-	// ✅ Memoize result, only recompute if `count` changes
-	const result = useMemo(() => slowFunction(count), [count]);
-
-	return (
-		<div>
-			<h2>Count: {count}</h2>
-			<h3>Result: {result}</h3>
-			<button onClick={() => setCount(count + 1)}>Increment</button>
-			<button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-				Toggle Theme
-			</button>
-		</div>
-	);
-};
-
-export default App;
-```
-
-### **🛠 How `useMemo` Fixes It**
-
-- `useMemo(() => slowFunction(count), [count])`
-  - Runs **only when `count` changes**.
-  - Does **not re-run** when `theme` changes.
-- Now, **"Toggle Theme"** does NOT trigger slow computations.
-
----
-
-### **📌 When to Use `useMemo`**
-
-✅ **Expensive computations** (e.g., filtering, sorting, calculations).  
-✅ **Prevent unnecessary recalculations** when only unrelated state changes.
-
-🚫 **Do NOT use it for simple values** (it adds overhead).
-
----
-
-## **🚀 Next Steps**
-
-Would you like to explore **how `useCallback` prevents unnecessary function re-creations in child components?** 😊
-
-### **How Does `useCallback` Prevent Unnecessary Re-renders?**
-
-`useCallback` **memoizes functions**, preventing them from being re-created on every render. This is useful when passing functions as props to child components.
-
----
-
-### **🔍 Problem: Function Re-Creation Causes Unnecessary Child Re-renders**
-
-```jsx
-import React, { useState } from "react";
-import ChildComponent from "./ChildComponent";
-
-const Parent = () => {
-	const [count, setCount] = useState(0);
-	const [theme, setTheme] = useState("light");
-
-	const handleClick = () => {
-		console.log("Button clicked!");
-	};
-
-	return (
-		<div>
-			<h2>Count: {count}</h2>
-			<button onClick={() => setCount(count + 1)}>Increment</button>
-			<button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-				Toggle Theme
-			</button>
-			<ChildComponent onClick={handleClick} />
-		</div>
-	);
-};
-
-export default Parent;
-```
-
-```jsx
-import React from "react";
-
-const ChildComponent = ({ onClick }) => {
-	console.log("ChildComponent re-rendered!");
-
-	return <button onClick={onClick}>Click Me</button>;
-};
-
-export default React.memo(ChildComponent);
-```
-
-### **🚨 Problem Here**
-
-- `handleClick` is re-created every render.
-- **Even if only `theme` changes,** `ChildComponent` **still re-renders**.
-- **Why?** Because **function props change on every render** unless memoized.
-
----
-
-### **✅ Solution: Use `useCallback` to Prevent Function Re-Creation**
-
-```jsx
-import React, { useState, useCallback } from "react";
-import ChildComponent from "./ChildComponent";
-
-const Parent = () => {
-	const [count, setCount] = useState(0);
-	const [theme, setTheme] = useState("light");
-
-	// ✅ Memoize function, so it's the same across renders (unless dependencies change)
-	const handleClick = useCallback(() => {
-		console.log("Button clicked!");
-	}, []); // No dependencies → stays the same across renders
-
-	return (
-		<div>
-			<h2>Count: {count}</h2>
-			<button onClick={() => setCount(count + 1)}>Increment</button>
-			<button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-				Toggle Theme
-			</button>
-			<ChildComponent onClick={handleClick} />
-		</div>
-	);
-};
-
-export default Parent;
-```
-
----
-
-### **🔄 How `useCallback` Fixes It**
-
-✅ `useCallback(() => {...}, [])` **returns the same function reference** between renders.  
-✅ `ChildComponent` **doesn’t re-render unless necessary** (React.memo optimizes it).
-
----
-
-### **📌 When to Use `useCallback`**
-
-✅ **Passing functions to child components** (prevents unnecessary re-renders).  
-✅ **Optimizing event handlers in performance-critical apps**.
-
-🚫 **Do NOT use it everywhere**—only where function re-creation is costly.
-
----
-
-## **🚀 Next Steps**
-
-Would you like to see **a real-world example of `useMemo` + `useCallback` optimizing a search filter or API call?** 😊
-
-### **Real-World Example: Optimizing a Search Filter with `useMemo` & `useCallback`**
-
-In this example, we build a **searchable user list** where:
-
-1. **`useMemo`** prevents **unnecessary filtering** when the list doesn't change.
-2. **`useCallback`** prevents **unnecessary re-creation** of the event handler.
-
----
-
-### **🚨 Problem: Unoptimized Filtering Causes Lag**
-
-Without optimizations, every keystroke **re-filters the entire list**, even if the list hasn't changed.
-
-```jsx
-import React, { useState } from "react";
-
-const users = ["Alice", "Bob", "Charlie", "David", "Eve"];
-
-const App = () => {
-	const [search, setSearch] = useState("");
-
-	const filteredUsers = users.filter((user) =>
-		user.toLowerCase().includes(search.toLowerCase()),
-	);
-
-	return (
-		<div>
-			<input
-				type="text"
-				placeholder="Search users..."
-				value={search}
-				onChange={(e) => setSearch(e.target.value)}
-			/>
-			<ul>
-				{filteredUsers.map((user, index) => (
-					<li key={index}>{user}</li>
-				))}
-			</ul>
-		</div>
-	);
-};
-
-export default App;
-```
-
-### **🚨 Issues in the Code Above**
-
-1. **Every keystroke re-runs `filter()`**, even when the list hasn't changed.
-2. **Filtering should happen only if `users` or `search` changes.**
-
----
-
-## **✅ Optimized with `useMemo` & `useCallback`**
-
-```jsx
-import React, { useState, useMemo, useCallback } from "react";
-
-const users = ["Alice", "Bob", "Charlie", "David", "Eve"];
-
-const App = () => {
-	const [search, setSearch] = useState("");
-
-	// ✅ Memoize filtered users → Runs only if `search` changes
-	const filteredUsers = useMemo(() => {
-		console.log("Filtering users...");
-		return users.filter((user) =>
-			user.toLowerCase().includes(search.toLowerCase()),
-		);
-	}, [search]); // Only re-run if `search` changes
-
-	// ✅ Memoize event handler → Prevents re-creation on every render
-	const handleSearch = useCallback((e) => {
-		setSearch(e.target.value);
-	}, []);
-
-	return (
-		<div>
-			<input
-				type="text"
-				placeholder="Search users..."
-				value={search}
-				onChange={handleSearch} // Using memoized handler
-			/>
-			<ul>
-				{filteredUsers.map((user, index) => (
-					<li key={index}>{user}</li>
-				))}
-			</ul>
-		</div>
-	);
-};
-
-export default App;
-```
-
----
-
-## **🔍 How This Optimization Helps**
-
-### **`useMemo` prevents unnecessary filtering**
-
-✅ `users.filter(...)` **only runs if `search` changes**.  
-✅ **Prevents expensive calculations on every render**.
-
-### **`useCallback` prevents unnecessary re-creation**
-
-✅ `handleSearch` function **does not re-create** on every render.  
-✅ **Better performance when passing to child components**.
-
----
-
-## **🚀 Next Steps**
-
-Would you like to see **how to optimize API requests using `useMemo` + `useCallback` + `useEffect`?** 😊
-
-### **Real-World Example: Optimizing API Requests with `useMemo`, `useCallback`, and `useEffect`**
-
-In this example, we build an app where:
-
-- We fetch data from an API (like a list of users).
-- We optimize the API request with `useMemo` and `useCallback` so that:
-  - **`useMemo`** prevents recalculating data based on dependencies.
-  - **`useCallback`** prevents unnecessary recreation of functions, especially event handlers.
-  - **`useEffect`** ensures the data fetch only happens when needed.
-
----
-
-### **🚨 Problem: Unoptimized API Fetching**
-
-In this case, each time the `search` or `page` changes, we may be unnecessarily triggering the API request or making inefficient requests.
-
-```jsx
-import React, { useState, useEffect } from "react";
-
-const App = () => {
-	const [search, setSearch] = useState("");
-	const [page, setPage] = useState(1);
-	const [users, setUsers] = useState([]);
-	const [loading, setLoading] = useState(false);
-
-	const fetchUsers = async () => {
-		setLoading(true);
-		const response = await fetch(
-			`https://api.example.com/users?search=${search}&page=${page}`,
-		);
-		const data = await response.json();
-		setUsers(data);
-		setLoading(false);
-	};
-
-	useEffect(() => {
-		fetchUsers();
-	}, [search, page]); // Re-fetch when `search` or `page` changes
-
-	const handleSearchChange = (e) => setSearch(e.target.value);
-	const handlePageChange = (pageNumber) => setPage(pageNumber);
-
-	return (
-		<div>
-			<input
-				type="text"
-				placeholder="Search users..."
-				value={search}
-				onChange={handleSearchChange}
-			/>
-			<button onClick={() => handlePageChange(page - 1)}>Previous</button>
-			<button onClick={() => handlePageChange(page + 1)}>Next</button>
-			{loading ? (
-				<p>Loading...</p>
-			) : (
-				<ul>
-					{users.map((user) => (
-						<li key={user.id}>{user.name}</li>
-					))}
-				</ul>
-			)}
-		</div>
-	);
-};
-
-export default App;
-```
-
-### **🚨 Issues in the Code Above**
-
-1. **API request happens on every render**:
-   - If `search` or `page` changes, it triggers a re-fetch.
-   - The `fetchUsers` function is **recreated every render** and called unnecessarily.
-
----
-
-## **✅ Optimized with `useMemo`, `useCallback`, and `useEffect`**
-
-```jsx
-import React, { useState, useEffect, useMemo, useCallback } from "react";
-
-const App = () => {
-	const [search, setSearch] = useState("");
-	const [page, setPage] = useState(1);
-	const [users, setUsers] = useState([]);
-	const [loading, setLoading] = useState(false);
-
-	// ✅ Memoize the API URL so it doesn't get recomputed on every render
-	const apiUrl = useMemo(() => {
-		return `https://api.example.com/users?search=${search}&page=${page}`;
-	}, [search, page]);
-
-	// ✅ Memoize the fetch function to avoid re-creating it on every render
-	const fetchUsers = useCallback(async () => {
-		setLoading(true);
-		const response = await fetch(apiUrl);
-		const data = await response.json();
-		setUsers(data);
-		setLoading(false);
-	}, [apiUrl]); // Re-run if `apiUrl` changes
-
-	// ✅ Trigger the effect to fetch users when `apiUrl` changes
-	useEffect(() => {
-		fetchUsers();
-	}, [fetchUsers]); // Only re-run when `fetchUsers` changes
-
-	const handleSearchChange = useCallback((e) => setSearch(e.target.value), []);
-	const handlePageChange = useCallback((pageNumber) => setPage(pageNumber), []);
-
-	return (
-		<div>
-			<input
-				type="text"
-				placeholder="Search users..."
-				value={search}
-				onChange={handleSearchChange}
-			/>
-			<button onClick={() => handlePageChange(page - 1)}>Previous</button>
-			<button onClick={() => handlePageChange(page + 1)}>Next</button>
-			{loading ? (
-				<p>Loading...</p>
-			) : (
-				<ul>
-					{users.map((user) => (
-						<li key={user.id}>{user.name}</li>
-					))}
-				</ul>
-			)}
-		</div>
-	);
-};
-
-export default App;
-```
-
----
-
-### **🔍 How `useMemo`, `useCallback`, and `useEffect` Help Here**
-
-1. **`useMemo` (for API URL)**:
-
-   - Memoizes the **API URL** so it's only recalculated when `search` or `page` changes.
-   - Prevents unnecessary re-calculation of the API URL on every render, optimizing performance.
-
-2. **`useCallback` (for `fetchUsers`, `handleSearchChange`, and `handlePageChange`)**:
-
-   - Memoizes the `fetchUsers` function to prevent it from being recreated on each render, which can lead to unnecessary re-executions in `useEffect`.
-   - Memoizes the event handlers (`handleSearchChange`, `handlePageChange`) so they don’t get recreated on each render and cause unnecessary re-renders of child components.
-
-3. **`useEffect` (to Trigger API Fetch)**:
-   - **Runs only when `fetchUsers` changes**, so the data fetch only occurs when necessary (e.g., when search or page changes).
-   - **Prevents redundant API requests** if no changes to the dependencies (e.g., search or page) occur.
-
----
-
-### **📌 Why This Optimization Matters**
-
-- **API calls** are **expensive**—optimizing them prevents unnecessary calls.
-- **Memoizing functions** and **memoizing URLs** prevents **re-creation** and **re-fetching** of the same data.
-- **Efficient data fetching** makes the app **faster**, especially when dealing with large datasets or external API calls.
-
----
-
-## **🚀 Next Steps**
-
-Would you like to dive into **how to handle pagination** and **lazy loading** to further optimize performance in large datasets or API-driven apps? 😊

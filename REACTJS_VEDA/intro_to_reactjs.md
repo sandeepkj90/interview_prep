@@ -7085,8 +7085,1702 @@ The React team's **official recommendation** since 2019 has been to use function
 --------
 
 
-33. Can a functional component have state? If yes, how?
-34. How does React handle events differently from HTML/JS?
+## Question 33. Can a functional component have state? If yes, how?
+
+---
+
+## 📋 Functional Components with State
+
+### 1️⃣ **One Line Answer**
+Yes, functional components can have state using the **useState Hook** (introduced in React 16.8), which allows you to add and manage **local state** without converting to a class component.
+
+---
+
+### 2️⃣ **Pointwise Answer**
+- **useState Hook**: React's built-in hook for adding state to functional components
+- **Introduced in React 16.8**: Hooks revolutionized functional components (February 2019)
+- **Returns array**: `[stateValue, setterFunction]` - use array destructuring to access
+- **No class needed**: Can use state without `this` keyword or class syntax
+- **Multiple state variables**: Call useState multiple times for different state values
+- **Initial value**: Pass initial state as argument to useState
+- **Setter function**: Updates state and triggers re-render
+- **Immutable updates**: State updates must be immutable (create new objects/arrays)
+- **Functional updates**: Setter accepts function for updates based on previous state
+- **Async updates**: State updates are batched and asynchronous
+- **Preserve across re-renders**: State persists between renders until component unmounts
+- **Modern best practice**: Functional components with hooks are now the standard
+
+---
+
+### 3️⃣ **Interview Main Points**
+
+**Core Concept - useState Hook:**
+
+```jsx
+import { useState } from 'react';
+
+function Component() {
+  const [state, setState] = useState(initialValue);
+  // state: current value
+  // setState: function to update state
+  // initialValue: initial state value
+}
+```
+
+**Syntax Breakdown:**
+1. **Import useState**: `import { useState } from 'react'`
+2. **Call useState**: Inside functional component body (not in loops/conditions)
+3. **Array destructuring**: `const [value, setter] = useState(initial)`
+4. **Name convention**: Use descriptive names like `[count, setCount]`, `[user, setUser]`
+
+**Common Interview Questions:**
+
+**Q: "Can functional components have state?"**
+→ Yes, using the **useState Hook** (React 16.8+)
+
+**Q: "How is useState different from this.setState in classes?"**
+→ **useState** doesn't merge objects automatically - you must spread manually. **setState** merges objects by default.
+
+**Q: "How do you declare state in functional components?"**
+```jsx
+const [count, setCount] = useState(0);
+```
+
+**Q: "Can you have multiple state variables?"**
+→ Yes! Call useState multiple times:
+```jsx
+const [name, setName] = useState('');
+const [age, setAge] = useState(0);
+const [isActive, setIsActive] = useState(false);
+```
+
+**Q: "What does useState return?"**
+→ An array with two elements: `[currentState, setterFunction]`
+
+**Q: "When would you use functional updates?"**
+→ When new state depends on previous state:
+```jsx
+setCount(prevCount => prevCount + 1); // ✅ Functional update
+setCount(count + 1); // ⚠️ May be stale in async scenarios
+```
+
+**Q: "Does useState replace this.state completely?"**
+→ Yes, for functional components. It's the modern alternative.
+
+**Q: "What happens if you call useState conditionally?"**
+→ **Error!** Violates Rules of Hooks - must call at top level, same order every render
+
+**Q: "How do you update object/array state?"**
+```jsx
+// Objects - spread to create new reference
+setUser({ ...user, name: 'Alice' });
+
+// Arrays - use immutable methods
+setItems([...items, newItem]);
+```
+
+**Q: "What was used before hooks for functional component state?"**
+→ **Nothing!** Functional components were stateless. You had to convert to class components to use state.
+
+**Critical Rules:**
+- ✅ **Call hooks at top level** - not inside loops, conditions, or nested functions
+- ✅ **Call from React functions** - functional components or custom hooks only
+- ✅ **Same order every render** - React relies on call order to track state
+- ✅ **Immutable updates** - always create new objects/arrays, never mutate
+- ✅ **Functional updates** - use when new state depends on old state
+- ❌ **Don't call in classes** - hooks don't work in class components
+- ❌ **Don't call conditionally** - breaks React's internal state tracking
+
+---
+
+### 4️⃣ **Example**
+
+**Basic useState - Counter:**
+
+```jsx
+import { useState } from 'react';
+
+// Simple counter with state
+function Counter() {
+  // Declare state variable 'count' with initial value 0
+  const [count, setCount] = useState(0);
+  
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setCount(count - 1)}>Decrement</button>
+      <button onClick={() => setCount(0)}>Reset</button>
+    </div>
+  );
+}
+```
+
+**Multiple State Variables:**
+
+```jsx
+function UserProfile() {
+  // Multiple independent state variables
+  const [name, setName] = useState('John Doe');
+  const [age, setAge] = useState(25);
+  const [email, setEmail] = useState('john@example.com');
+  const [isActive, setIsActive] = useState(true);
+  
+  return (
+    <div>
+      <h2>{name}</h2>
+      <p>Age: {age}</p>
+      <p>Email: {email}</p>
+      <p>Status: {isActive ? 'Active' : 'Inactive'}</p>
+      
+      <button onClick={() => setAge(age + 1)}>Birthday</button>
+      <button onClick={() => setIsActive(!isActive)}>Toggle Status</button>
+    </div>
+  );
+}
+```
+
+**Object State:**
+
+```jsx
+function UserForm() {
+  // Single state object for related data
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    age: 0
+  });
+  
+  // Update individual properties (must spread!)
+  const handleNameChange = (e) => {
+    setUser({ ...user, name: e.target.value });
+  };
+  
+  const handleEmailChange = (e) => {
+    setUser({ ...user, email: e.target.value });
+  };
+  
+  // Or use a generic handler
+  const handleChange = (field) => (e) => {
+    setUser({ ...user, [field]: e.target.value });
+  };
+  
+  return (
+    <form>
+      <input 
+        value={user.name} 
+        onChange={handleChange('name')}
+        placeholder="Name"
+      />
+      <input 
+        value={user.email} 
+        onChange={handleChange('email')}
+        placeholder="Email"
+      />
+      <input 
+        type="number"
+        value={user.age} 
+        onChange={handleChange('age')}
+        placeholder="Age"
+      />
+      <p>User: {JSON.stringify(user)}</p>
+    </form>
+  );
+}
+```
+
+**Array State:**
+
+```jsx
+function TodoList() {
+  const [todos, setTodos] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  
+  const addTodo = () => {
+    if (inputValue.trim()) {
+      // ✅ Create new array with spread operator
+      setTodos([...todos, { id: Date.now(), text: inputValue, completed: false }]);
+      setInputValue('');
+    }
+  };
+  
+  const removeTodo = (id) => {
+    // ✅ Filter creates new array
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
+  
+  const toggleTodo = (id) => {
+    // ✅ Map creates new array
+    setTodos(todos.map(todo =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    ));
+  };
+  
+  return (
+    <div>
+      <input 
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        placeholder="Enter todo"
+      />
+      <button onClick={addTodo}>Add</button>
+      
+      <ul>
+        {todos.map(todo => (
+          <li key={todo.id}>
+            <span 
+              style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
+              onClick={() => toggleTodo(todo.id)}
+            >
+              {todo.text}
+            </span>
+            <button onClick={() => removeTodo(todo.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+**Functional Updates (Previous State):**
+
+```jsx
+function AsyncCounter() {
+  const [count, setCount] = useState(0);
+  
+  // ❌ WRONG - May use stale state in async scenarios
+  const incrementWrong = () => {
+    setTimeout(() => {
+      setCount(count + 1); // 'count' might be stale
+    }, 1000);
+  };
+  
+  // ✅ RIGHT - Functional update always has latest state
+  const incrementCorrect = () => {
+    setTimeout(() => {
+      setCount(prevCount => prevCount + 1); // Always current
+    }, 1000);
+  };
+  
+  // Multiple rapid updates
+  const incrementByThree = () => {
+    // ❌ WRONG - All three use same 'count' value (batched)
+    setCount(count + 1);
+    setCount(count + 1);
+    setCount(count + 1);
+    // Only increments by 1!
+    
+    // ✅ RIGHT - Functional updates chain correctly
+    setCount(prev => prev + 1);
+    setCount(prev => prev + 1);
+    setCount(prev => prev + 1);
+    // Increments by 3!
+  };
+  
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={incrementCorrect}>Delayed +1</button>
+      <button onClick={incrementByThree}>+3</button>
+    </div>
+  );
+}
+```
+
+**Lazy Initial State:**
+
+```jsx
+function ExpensiveComponent() {
+  // ❌ WRONG - Calculation runs every render
+  const [data, setData] = useState(expensiveCalculation());
+  
+  // ✅ RIGHT - Function only runs on initial render
+  const [data, setData] = useState(() => {
+    console.log('Computing initial state...');
+    return expensiveCalculation();
+  });
+  
+  return <div>{data}</div>;
+}
+
+// Example: Reading from localStorage
+function PreferencesPanel() {
+  const [preferences, setPreferences] = useState(() => {
+    // Only read from localStorage on mount
+    const saved = localStorage.getItem('preferences');
+    return saved ? JSON.parse(saved) : { theme: 'light', language: 'en' };
+  });
+  
+  // Save to localStorage when preferences change
+  const updatePreferences = (newPrefs) => {
+    setPreferences(newPrefs);
+    localStorage.setItem('preferences', JSON.stringify(newPrefs));
+  };
+  
+  return (
+    <div>
+      <p>Theme: {preferences.theme}</p>
+      <button onClick={() => updatePreferences({ ...preferences, theme: 'dark' })}>
+        Dark Mode
+      </button>
+    </div>
+  );
+}
+```
+
+**Before Hooks (Class Component):**
+
+```jsx
+// OLD WAY - Class component required for state
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 }; // Initialize state
+  }
+  
+  increment = () => {
+    this.setState({ count: this.state.count + 1 });
+  }
+  
+  render() {
+    return (
+      <div>
+        <p>Count: {this.state.count}</p>
+        <button onClick={this.increment}>Increment</button>
+      </div>
+    );
+  }
+}
+
+// NEW WAY - Functional component with useState
+function Counter() {
+  const [count, setCount] = useState(0);
+  
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+// Much cleaner! No class, constructor, or 'this'
+```
+
+**Complex State with Multiple Hooks:**
+
+```jsx
+function ShoppingCart() {
+  // Separate state for different concerns
+  const [items, setItems] = useState([]);
+  const [coupon, setCoupon] = useState('');
+  const [discount, setDiscount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  
+  const addItem = (item) => {
+    setItems([...items, item]);
+  };
+  
+  const removeItem = (id) => {
+    setItems(items.filter(item => item.id !== id));
+  };
+  
+  const applyCoupon = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/coupons/${coupon}`);
+      const data = await response.json();
+      setDiscount(data.discount);
+    } catch (error) {
+      setDiscount(0);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const total = items.reduce((sum, item) => sum + item.price, 0);
+  const finalTotal = total * (1 - discount / 100);
+  
+  return (
+    <div>
+      <h2>Shopping Cart</h2>
+      <ul>
+        {items.map(item => (
+          <li key={item.id}>
+            {item.name} - ${item.price}
+            <button onClick={() => removeItem(item.id)}>Remove</button>
+          </li>
+        ))}
+      </ul>
+      <p>Subtotal: ${total}</p>
+      
+      <input 
+        value={coupon}
+        onChange={(e) => setCoupon(e.target.value)}
+        placeholder="Coupon code"
+      />
+      <button onClick={applyCoupon} disabled={loading}>
+        {loading ? 'Applying...' : 'Apply Coupon'}
+      </button>
+      
+      {discount > 0 && <p>Discount: {discount}%</p>}
+      <p><strong>Total: ${finalTotal.toFixed(2)}</strong></p>
+    </div>
+  );
+}
+```
+
+---
+
+### 5️⃣ **Pros and Cons**
+
+**Pros of useState Hook:**
+- ✅ **No class syntax**: Simpler, less boilerplate code
+- ✅ **No 'this' keyword**: Eliminates binding issues and confusion
+- ✅ **Multiple state variables**: Separate concerns clearly
+- ✅ **Functional programming**: Aligns with modern JavaScript patterns
+- ✅ **Better code organization**: Group related state and logic together
+- ✅ **Easier to test**: Pure functions are simpler to test
+- ✅ **Custom hooks**: Enable powerful code reuse
+- ✅ **Better performance**: React can optimize functional components better
+- ✅ **Smaller bundle size**: Less code than class components
+- ✅ **Modern ecosystem**: All new libraries/tools built for hooks
+- ✅ **Gradual adoption**: Can mix with class components
+- ✅ **Concurrent features**: Works better with React 18+ features
+
+**Cons of useState Hook:**
+- ❌ **Learning curve**: New mental model for developers used to classes
+- ❌ **Rules of Hooks**: Must follow strict rules (top-level, same order)
+- ❌ **Stale closures**: Easy to capture old values in closures
+- ❌ **No automatic merging**: Must manually spread objects (unlike this.setState)
+- ❌ **Dependency management**: Need to understand functional updates
+- ❌ **Multiple re-renders**: Each setState triggers re-render (not always bad)
+- ❌ **Complex state**: Many useState calls can get messy (use useReducer instead)
+
+**Comparison: useState vs Class State:**
+
+| Feature | useState (Functional) | this.state (Class) |
+|---------|----------------------|-------------------|
+| **Syntax** | `const [x, setX] = useState(0)` | `this.state = { x: 0 }` |
+| **Update** | `setX(1)` | `this.setState({ x: 1 })` |
+| **Merging** | Manual spreading required | Automatic shallow merge |
+| **Multiple states** | Multiple useState calls | Single state object |
+| **'this' keyword** | Not needed | Required |
+| **Boilerplate** | Minimal | More verbose |
+| **Code reuse** | Custom hooks | HOCs/Render props |
+
+---
+
+### 6️⃣ **Use Cases in Project/Application**
+
+**1. Form State Management:**
+
+```jsx
+function LoginForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [errors, setErrors] = useState({});
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Validation and submission logic
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <input 
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+      />
+      <input 
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      />
+      <label>
+        <input 
+          type="checkbox"
+          checked={rememberMe}
+          onChange={(e) => setRememberMe(e.target.checked)}
+        />
+        Remember me
+      </label>
+      <button type="submit">Login</button>
+    </form>
+  );
+}
+```
+**Use Case**: Login forms, registration, surveys, data entry
+
+**2. UI State (Modals, Dropdowns, Tabs):**
+
+```jsx
+function Dashboard() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  
+  return (
+    <div>
+      <nav>
+        <button onClick={() => setActiveTab('overview')}>Overview</button>
+        <button onClick={() => setActiveTab('analytics')}>Analytics</button>
+        <button onClick={() => setActiveTab('settings')}>Settings</button>
+      </nav>
+      
+      <div>
+        {activeTab === 'overview' && <Overview />}
+        {activeTab === 'analytics' && <Analytics />}
+        {activeTab === 'settings' && <Settings />}
+      </div>
+      
+      <button onClick={() => setIsModalOpen(true)}>Open Modal</button>
+      
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <p>Modal content</p>
+        </Modal>
+      )}
+    </div>
+  );
+}
+```
+**Use Case**: Modals, tabs, accordions, dropdowns, sidebars, tooltips
+
+**3. Data Fetching State:**
+
+```jsx
+function UserList() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  useEffect(() => {
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(data => {
+        setUsers(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+  
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  
+  return (
+    <ul>
+      {users.map(user => <li key={user.id}>{user.name}</li>)}
+    </ul>
+  );
+}
+```
+**Use Case**: API integration, async data loading, CRUD operations
+
+**4. Search/Filter Interfaces:**
+
+```jsx
+function ProductSearch() {
+  const [query, setQuery] = useState('');
+  const [products, setProducts] = useState(allProducts);
+  const [category, setCategory] = useState('all');
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+  
+  useEffect(() => {
+    const filtered = allProducts.filter(product => {
+      const matchesQuery = product.name.toLowerCase().includes(query.toLowerCase());
+      const matchesCategory = category === 'all' || product.category === category;
+      const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
+      return matchesQuery && matchesCategory && matchesPrice;
+    });
+    setProducts(filtered);
+  }, [query, category, priceRange]);
+  
+  return (
+    <div>
+      <input 
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search products..."
+      />
+      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <option value="all">All Categories</option>
+        <option value="electronics">Electronics</option>
+        <option value="clothing">Clothing</option>
+      </select>
+      
+      <ProductList products={products} />
+    </div>
+  );
+}
+```
+**Use Case**: Search bars, filtering, sorting, live search results
+
+**5. Toggle States:**
+
+```jsx
+function SettingsPanel() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  
+  return (
+    <div className={isDarkMode ? 'dark' : 'light'}>
+      <h2>Settings</h2>
+      
+      <label>
+        <input 
+          type="checkbox"
+          checked={isDarkMode}
+          onChange={(e) => setIsDarkMode(e.target.checked)}
+        />
+        Dark Mode
+      </label>
+      
+      <label>
+        <input 
+          type="checkbox"
+          checked={notificationsEnabled}
+          onChange={(e) => setNotificationsEnabled(e.target.checked)}
+        />
+        Enable Notifications
+      </label>
+      
+      <label>
+        <input 
+          type="checkbox"
+          checked={soundEnabled}
+          onChange={(e) => setSoundEnabled(e.target.checked)}
+        />
+        Enable Sound
+      </label>
+    </div>
+  );
+}
+```
+**Use Case**: Settings panels, preferences, feature toggles
+
+**6. Counter/Timer Applications:**
+
+```jsx
+function Stopwatch() {
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  
+  useEffect(() => {
+    let interval;
+    if (isRunning) {
+      interval = setInterval(() => {
+        setTime(prevTime => prevTime + 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isRunning]);
+  
+  return (
+    <div>
+      <p>Time: {time}s</p>
+      <button onClick={() => setIsRunning(!isRunning)}>
+        {isRunning ? 'Pause' : 'Start'}
+      </button>
+      <button onClick={() => { setTime(0); setIsRunning(false); }}>
+        Reset
+      </button>
+    </div>
+  );
+}
+```
+**Use Case**: Timers, stopwatches, countdowns, game scores
+
+**7. Shopping Cart:**
+
+```jsx
+function useShoppingCart() {
+  const [cart, setCart] = useState([]);
+  
+  const addToCart = (product) => {
+    setCart(prevCart => {
+      const existing = prevCart.find(item => item.id === product.id);
+      if (existing) {
+        return prevCart.map(item =>
+          item.id === product.id 
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prevCart, { ...product, quantity: 1 }];
+    });
+  };
+  
+  const removeFromCart = (productId) => {
+    setCart(prevCart => prevCart.filter(item => item.id !== productId));
+  };
+  
+  const updateQuantity = (productId, quantity) => {
+    setCart(prevCart =>
+      prevCart.map(item =>
+        item.id === productId ? { ...item, quantity } : item
+      )
+    );
+  };
+  
+  const clearCart = () => setCart([]);
+  
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  
+  return { cart, addToCart, removeFromCart, updateQuantity, clearCart, total };
+}
+```
+**Use Case**: E-commerce carts, wishlists, favorites
+
+**8. Multi-Step Forms/Wizards:**
+
+```jsx
+function MultiStepForm() {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    personalInfo: {},
+    address: {},
+    payment: {}
+  });
+  
+  const nextStep = () => setStep(prev => prev + 1);
+  const prevStep = () => setStep(prev => prev - 1);
+  
+  const updateFormData = (section, data) => {
+    setFormData(prev => ({
+      ...prev,
+      [section]: { ...prev[section], ...data }
+    }));
+  };
+  
+  return (
+    <div>
+      {step === 1 && <PersonalInfo onNext={nextStep} updateData={updateFormData} />}
+      {step === 2 && <Address onNext={nextStep} onBack={prevStep} updateData={updateFormData} />}
+      {step === 3 && <Payment onBack={prevStep} data={formData} />}
+      
+      <div>Step {step} of 3</div>
+    </div>
+  );
+}
+```
+**Use Case**: Checkout flows, onboarding, registration wizards
+
+---
+
+### 7️⃣ **Detailed Explanation**
+
+The question of whether **functional components can have state** represents a fundamental shift in React's evolution and highlights one of the most significant improvements to the framework.  Before **React 16.8** (February 2019), functional components were **stateless by design** – they could only receive props and return JSX, making them purely presentational components.  If you needed local state, event handlers, or lifecycle methods, you **had to convert** your functional component into a **class component**, which required understanding `this` binding, constructor initialization, and the class lifecycle API.  This limitation created an artificial distinction between "smart" (class, stateful) and "dumb" (functional, stateless) components.
+
+The introduction of **Hooks** in React 16.8 fundamentally changed this paradigm. The **useState Hook** specifically enables functional components to have **local state** without any of the complexity associated with classes.  This wasn't just a syntactic improvement – it represented a philosophical shift in how React approaches component architecture, making functional components **first-class citizens** capable of everything class components could do, but with cleaner syntax and better patterns for code reuse.
+
+**useState** is a function imported from React that you call inside a functional component to add state.  It accepts an **initial state value** as an argument and returns an **array with exactly two elements**:  the current state value and a setter function to update that value.  You use **array destructuring** to extract these values with meaningful names:
+
+```jsx
+const [count, setCount] = useState(0);
+//     ^       ^              ^
+//   current  setter      initial value
+```
+
+The **naming convention** is to use a descriptive name for the state variable and prefix the setter with "set" (e.g., `count/setCount`, `user/setUser`, `isOpen/setIsOpen`).  This is just convention, not a requirement – you could name them anything – but following this pattern makes your code more readable and maintainable.
+
+When you call the **setter function** (e.g., `setCount(5)`), React doesn't immediately update the state variable.  Instead, it **schedules a re-render** of the component with the new state value.  During the next render, useState will return the updated value.  This asynchronous, batched update behavior is crucial for performance – React can combine multiple state updates into a single re-render to avoid unnecessary work.
+
+One key difference from **class component state** (`this.state`) is that useState **doesn't automatically merge objects**. In class components, `this.setState({ name: 'Alice' })` would merge the new property with existing state properties.  With useState, you must **manually spread** the previous state when updating objects:
+
+```jsx
+// Class component - automatic merge
+this.setState({ name: 'Alice' }); // Other properties preserved
+
+// Functional component - manual spread required
+setUser({ ...user, name: 'Alice' }); // Must spread to preserve other properties
+```
+
+You can call **useState multiple times** in a single component to manage different pieces of state separately.  This is actually **encouraged** for unrelated state variables because it makes your code clearer and enables better optimization.  React tracks which useState call corresponds to which state variable by the **order of calls**, which is why **Rules of Hooks** require that hooks are called at the top level in the same order every render – you can't call useState inside conditionals or loops because that would change the call order between renders.
+
+**Functional updates** are an important pattern when the new state depends on the previous state.  Instead of passing a value to the setter, you pass a **function that receives the previous state** and returns the new state:
+
+```jsx
+// ⚠️ Potential issue - may use stale state
+setCount(count + 1);
+
+// ✅ Always safe - uses latest state
+setCount(prevCount => prevCount + 1);
+```
+
+This is especially important in **asynchronous scenarios** or when multiple updates happen rapidly, because the state variable you've captured in your closure might be stale by the time the update runs.  The functional update form guarantees you're working with the **latest state value** that React has internally.
+
+**Lazy initialization** is another useful pattern for expensive initial state calculations.  If computing the initial state is costly (e.g., reading from localStorage, processing large data), you can pass a **function** to useState instead of a value.  React will only call this function **once on the initial render**:
+
+```jsx
+// ❌ Runs expensive calculation every render
+const [data, setData] = useState(expensiveCalculation());
+
+// ✅ Runs only once on mount
+const [data, setData] = useState(() => expensiveCalculation());
+```
+
+The **immutability principle** that applies to all React state is especially important to understand with useState.  When updating objects or arrays, you must create **new references**, not mutate existing ones.  Use the spread operator (`...`), array methods that return new arrays (`map`, `filter`, `concat`), or libraries like **Immer** for complex nested updates.
+
+The introduction of useState and other hooks enabled **custom hooks** – reusable functions that encapsulate stateful logic.  This was nearly impossible with class components (requiring complex patterns like Higher-Order Components or Render Props), but with hooks, you can extract any stateful logic into a custom hook and reuse it across components simply by calling the function.
+
+**Performance implications** of useState are generally positive.  Functional components with hooks compile to simpler JavaScript than class components, resulting in smaller bundle sizes.  React can also apply optimizations more aggressively to functional components.  However, each `setState` call triggers a re-render, so for complex state with many related pieces, **useReducer** might be a better choice than multiple useState calls.
+
+The **mental model shift** from class state to useState is significant.  Instead of thinking about a single `this.state` object that holds all component state, you think about **individual state variables** that can be independently updated.  Instead of lifecycle methods (`componentDidMount`, etc.), you use **useEffect** to synchronize state with external systems.  This shift from object-oriented to functional programming patterns initially feels unfamiliar but ultimately leads to cleaner, more maintainable code.
+
+**Migration strategies** from class components to functional components with hooks are straightforward for simple components but require care for complex ones.  Each `this.state.x` becomes `const [x, setX] = useState(...)`, and each `this.setState({ x: value })` becomes `setX(value)`.  Lifecycle methods map to `useEffect` calls.  The refactoring is mechanical but requires understanding the new patterns to avoid pitfalls like stale closures or missing dependencies.
+
+The React team's **strong recommendation** since 2019 has been to write all new components as functional components with hooks.  Class components aren't deprecated and will continue to be supported indefinitely, but the ecosystem, documentation, and React's future features are all built with hooks as the foundation.  Learning useState and other hooks is essential for modern React development, and the investment pays off in cleaner code, better patterns, and access to the latest features.
+
+---
+
+**🔑 Key Takeaway:** Yes, **functional components can have state** using the **useState Hook** (React 16.8+). Call `const [state, setState] = useState(initialValue)` inside your component to get the **current state value** and a **setter function**. Call useState multiple times for different state variables. Always update state **immutably** (spread objects/arrays), use **functional updates** when new state depends on old state, and follow **Rules of Hooks** (top-level, same order every render). useState revolutionized React by eliminating the need for class components, enabling cleaner code, better reuse through **custom hooks**, and avoiding **`this` keyword** complexity. Modern React development uses functional components with hooks as the standard approach.
+
+---
+
+
+## Question 34. How does React handle events differently from HTML/JS?
+
+---
+
+## 📋 React Event Handling vs HTML/JS
+
+### 1️⃣ **One Line Answer**
+React uses **synthetic events** (a cross-browser wrapper) with **camelCase naming** (onClick, onChange) instead of lowercase (onclick, onchange), requires **function references** not strings, and implements **event delegation** at the root level for better performance.
+
+---
+
+### 2️⃣ **Pointwise Answer**
+
+**React Event Differences:**
+- **Synthetic Events**: Cross-browser wrapper around native events, consistent API
+- **camelCase naming**: `onClick`, `onChange`, `onSubmit` (not `onclick`, `onchange`)
+- **Function reference**: Pass function directly `{handleClick}` not string `"handleClick()"`
+- **Event delegation**: Single listener at root, not on each element
+- **preventDefault explicit**: Must call `e.preventDefault()`, can't return false
+- **Event pooling**: Events are reused (nullified after callback in React <17)
+- **Consistent behavior**: Same API across all browsers
+- **Automatic binding**: Arrow functions or explicit binding needed
+- **No `this` confusion**: Modern hooks eliminate `this` binding issues
+- **Event bubbling**: Works same as native but through React tree
+- **Passive events**: Can't access event asynchronously without `e.persist()` (React <17)
+- **React 17+ changes**: No event pooling, events attached to root container not document
+
+**HTML/JS Event Characteristics:**
+- **Lowercase names**: `onclick`, `onchange`, `onsubmit`
+- **String handlers**: `onclick="handleClick()"` in HTML
+- **Direct DOM attachment**: Each element gets own listener
+- **Return false**: Can return false to prevent default
+- **Native events**: Browser-specific Event objects
+- **Memory overhead**: Listeners on every element
+
+---
+
+### 3️⃣ **Interview Main Points**
+
+**Key Differences Table:**
+
+| Feature | React | HTML/JS |
+|---------|-------|---------|
+| **Event naming** | camelCase (`onClick`) | lowercase (`onclick`) |
+| **Handler syntax** | Function reference `{handler}` | String `"handler()"` |
+| **Event object** | SyntheticEvent (wrapper) | Native Event |
+| **Event delegation** | Root-level delegation | Direct element binding |
+| **Prevent default** | `e.preventDefault()` required | Can `return false` |
+| **Cross-browser** | Consistent API | Browser differences |
+| **Performance** | Single root listener | Listener per element |
+| **Event pooling** | Pooled (React <17) | No pooling |
+
+**SyntheticEvent Properties:**
+
+```jsx
+function handleClick(e) {
+  // e is SyntheticEvent, not native Event
+  e.preventDefault();     // Prevent default action
+  e.stopPropagation();    // Stop bubbling
+  e.target;               // Element that triggered event
+  e.currentTarget;        // Element with listener attached
+  e.nativeEvent;          // Access underlying native event
+  e.type;                 // Event type (e.g., 'click')
+}
+```
+
+**Common Interview Questions:**
+
+**Q: "What are SyntheticEvents in React?"**
+→ Cross-browser wrappers around native events, providing consistent API across all browsers
+
+**Q: "Why does React use camelCase for events?"**
+→ JSX is JavaScript, not HTML. JavaScript convention uses camelCase for properties
+
+**Q: "How do you prevent default behavior in React?"**
+→ Must call `e.preventDefault()` explicitly. Returning `false` doesn't work like in jQuery/HTML
+
+**Q: "What's event delegation in React?"**
+→ React attaches a single event listener at the root instead of individual listeners on each element
+
+**Q: "Can you access the native event in React?"**
+→ Yes, via `e.nativeEvent` property on the SyntheticEvent
+
+**Q: "Why do you need to bind `this` in class components?"**
+→ JavaScript class methods don't automatically bind `this`. Use arrow functions or explicit binding
+
+**Q: "What changed in React 17 regarding events?"**
+→ Events attach to root container (not document), event pooling removed
+
+**Q: "How do you pass parameters to event handlers?"**
+```jsx
+// Arrow function in JSX
+<button onClick={(e) => handleClick(id, e)}>Click</button>
+
+// Curried function
+<button onClick={handleClick(id)}>Click</button>
+```
+
+**Q: "What's event pooling?"**
+→ React <17 reused event objects for performance. Events were nullified after callback. React 17+ removed this.
+
+**Critical Rules:**
+- ✅ **Use camelCase**: `onClick`, `onChange`, not `onclick`, `onchange`
+- ✅ **Pass function reference**: `{handleClick}` not `{handleClick()}`
+- ✅ **Call preventDefault explicitly**: Return false doesn't work
+- ✅ **Use arrow functions or bind**: Preserve `this` context in classes
+- ✅ **Access e.nativeEvent**: When you need native event object
+- ❌ **Don't call function in JSX**: `onClick={handleClick()}` calls immediately
+- ❌ **Don't use strings**: `onClick="handleClick()"` doesn't work in JSX
+- ❌ **Don't access event async**: In React <17, call `e.persist()` first
+
+---
+
+### 4️⃣ **Example**
+
+**React vs HTML Event Syntax:**
+
+```jsx
+// ❌ HTML/JS - lowercase, string handler
+<button onclick="handleClick()">Click me</button>
+
+// ✅ REACT - camelCase, function reference
+<button onClick={handleClick}>Click me</button>
+```
+
+**Basic Event Handling:**
+
+```jsx
+// REACT - Functional Component
+function Button() {
+  const handleClick = (e) => {
+    console.log('Button clicked!');
+    console.log('Event type:', e.type); // 'click'
+    console.log('Target:', e.target); // <button> element
+  };
+  
+  return <button onClick={handleClick}>Click me</button>;
+}
+
+// HTML/JS - Traditional
+<button onclick="handleClick()">Click me</button>
+<script>
+  function handleClick() {
+    console.log('Button clicked!');
+  }
+</script>
+```
+
+**Preventing Default Behavior:**
+
+```jsx
+// REACT - Must use e.preventDefault()
+function Form() {
+  const handleSubmit = (e) => {
+    e.preventDefault(); // ✅ Required
+    console.log('Form submitted');
+    // return false; ❌ Doesn't work in React!
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+// HTML/JS - Can return false
+<form onsubmit="return handleSubmit()">
+  <input type="text" />
+  <button type="submit">Submit</button>
+</form>
+<script>
+  function handleSubmit() {
+    console.log('Form submitted');
+    return false; // ✅ Works in traditional HTML
+  }
+</script>
+```
+
+**Passing Parameters to Event Handlers:**
+
+```jsx
+function TodoList() {
+  const items = ['Task 1', 'Task 2', 'Task 3'];
+  
+  // Method 1: Arrow function in JSX
+  const handleDelete = (id, e) => {
+    console.log('Delete item:', id);
+    console.log('Event:', e);
+  };
+  
+  return (
+    <ul>
+      {items.map((item, index) => (
+        <li key={index}>
+          {item}
+          {/* ✅ Arrow function wrapper */}
+          <button onClick={(e) => handleDelete(index, e)}>Delete</button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+// Method 2: Curried function
+function TodoList() {
+  const items = ['Task 1', 'Task 2', 'Task 3'];
+  
+  const handleDelete = (id) => (e) => {
+    console.log('Delete item:', id);
+    console.log('Event:', e);
+  };
+  
+  return (
+    <ul>
+      {items.map((item, index) => (
+        <li key={index}>
+          {item}
+          {/* ✅ Curried function */}
+          <button onClick={handleDelete(index)}>Delete</button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+**Class Component - `this` Binding:**
+
+```jsx
+class Button extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+    
+    // Method 1: Bind in constructor
+    this.handleClick = this.handleClick.bind(this);
+  }
+  
+  // ❌ WRONG - `this` will be undefined
+  handleClickWrong() {
+    this.setState({ count: this.state.count + 1 }); // Error!
+  }
+  
+  // ✅ RIGHT - Bound in constructor
+  handleClick() {
+    this.setState({ count: this.state.count + 1 });
+  }
+  
+  // Method 2: Arrow function (auto-binds)
+  handleClickArrow = () => {
+    this.setState({ count: this.state.count + 1 });
+  }
+  
+  render() {
+    return (
+      <div>
+        {/* ❌ Wrong - `this` undefined */}
+        <button onClick={this.handleClickWrong}>Wrong</button>
+        
+        {/* ✅ Right - Bound in constructor */}
+        <button onClick={this.handleClick}>Correct (bound)</button>
+        
+        {/* ✅ Right - Arrow function */}
+        <button onClick={this.handleClickArrow}>Correct (arrow)</button>
+        
+        {/* ✅ Right - Inline arrow function */}
+        <button onClick={() => this.handleClickWrong()}>Inline arrow</button>
+        
+        <p>Count: {this.state.count}</p>
+      </div>
+    );
+  }
+}
+```
+
+**Accessing Native Event:**
+
+```jsx
+function InputField() {
+  const handleChange = (e) => {
+    // SyntheticEvent properties
+    console.log('Synthetic event type:', e.type);
+    console.log('Target value:', e.target.value);
+    
+    // Access native event
+    console.log('Native event:', e.nativeEvent);
+    console.log('Native timestamp:', e.nativeEvent.timeStamp);
+  };
+  
+  return <input onChange={handleChange} placeholder="Type something..." />;
+}
+```
+
+**Event Pooling (React <17):**
+
+```jsx
+// React <17 - Event pooling issue
+function OldReactComponent() {
+  const handleClick = (e) => {
+    console.log(e.type); // 'click'
+    
+    setTimeout(() => {
+      console.log(e.type); // null! Event was pooled and reused
+    }, 1000);
+  };
+  
+  const handleClickFixed = (e) => {
+    e.persist(); // ✅ Prevents pooling (React <17 only)
+    
+    setTimeout(() => {
+      console.log(e.type); // 'click' - works now!
+    }, 1000);
+  };
+  
+  return <button onClick={handleClickFixed}>Click</button>;
+}
+
+// React 17+ - No pooling, works automatically
+function ModernReactComponent() {
+  const handleClick = (e) => {
+    console.log(e.type); // 'click'
+    
+    setTimeout(() => {
+      console.log(e.type); // 'click' - works! No pooling in React 17+
+    }, 1000);
+  };
+  
+  return <button onClick={handleClick}>Click</button>;
+}
+```
+
+**Multiple Event Types:**
+
+```jsx
+function InteractiveElement() {
+  const handleClick = (e) => console.log('Clicked');
+  const handleMouseEnter = (e) => console.log('Mouse entered');
+  const handleMouseLeave = (e) => console.log('Mouse left');
+  const handleDoubleClick = (e) => console.log('Double clicked');
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    console.log('Right clicked');
+  };
+  
+  return (
+    <div
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onDoubleClick={handleDoubleClick}
+      onContextMenu={handleContextMenu}
+      style={{ padding: '20px', background: 'lightblue' }}
+    >
+      Interactive Element
+    </div>
+  );
+}
+```
+
+**Form Input Events:**
+
+```jsx
+function ControlledForm() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  
+  // Generic change handler
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+  
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent page reload
+    console.log('Form data:', formData);
+  };
+  
+  const handleReset = (e) => {
+    setFormData({ name: '', email: '', message: '' });
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        placeholder="Name"
+      />
+      <input
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="Email"
+      />
+      <textarea
+        name="message"
+        value={formData.message}
+        onChange={handleChange}
+        placeholder="Message"
+      />
+      <button type="submit">Submit</button>
+      <button type="button" onClick={handleReset}>Reset</button>
+    </form>
+  );
+}
+```
+
+**Event Bubbling & Propagation:**
+
+```jsx
+function BubblingExample() {
+  const handleParentClick = () => {
+    console.log('Parent clicked');
+  };
+  
+  const handleChildClick = (e) => {
+    console.log('Child clicked');
+    e.stopPropagation(); // Stop bubbling to parent
+  };
+  
+  return (
+    <div onClick={handleParentClick} style={{ padding: '20px', background: 'lightgray' }}>
+      Parent
+      <button onClick={handleChildClick}>
+        Child (click won't bubble to parent)
+      </button>
+    </div>
+  );
+}
+```
+
+**Keyboard Events:**
+
+```jsx
+function SearchInput() {
+  const [query, setQuery] = useState('');
+  
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      console.log('Search for:', query);
+    }
+    if (e.key === 'Escape') {
+      setQuery('');
+    }
+  };
+  
+  const handleKeyPress = (e) => {
+    console.log('Key pressed:', e.key);
+  };
+  
+  return (
+    <input
+      type="text"
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      onKeyDown={handleKeyDown}
+      onKeyPress={handleKeyPress}
+      placeholder="Press Enter to search, Esc to clear"
+    />
+  );
+}
+```
+
+---
+
+### 5️⃣ **Pros and Cons**
+
+**Pros of React Event Handling:**
+- ✅ **Cross-browser consistency**: Same API across all browsers, no quirks
+- ✅ **Better performance**: Event delegation reduces memory footprint
+- ✅ **Cleaner syntax**: Function references, not strings
+- ✅ **Type safety**: TypeScript can validate event handlers
+- ✅ **No memory leaks**: React handles cleanup automatically
+- ✅ **Predictable behavior**: Normalized event properties
+- ✅ **Modern JavaScript**: Works seamlessly with ES6+ features
+- ✅ **React 17+ improvements**: No pooling, better async handling
+- ✅ **Declarative**: Event handlers part of JSX, easy to understand
+- ✅ **Testing friendly**: Easy to mock and test event handlers
+
+**Cons of React Event Handling:**
+- ❌ **Learning curve**: Different from traditional HTML/JS
+- ❌ **camelCase confusion**: Easy to forget (use `onClick` not `onclick`)
+- ❌ **Can't return false**: Must use `e.preventDefault()` explicitly
+- ❌ **Binding issues**: Class components need manual binding
+- ❌ **Event pooling**: (React <17) Confusing for async access
+- ❌ **Extra wrapper layer**: SyntheticEvent adds slight overhead
+- ❌ **Migration effort**: Converting existing HTML requires changes
+
+**Pros of HTML/JS Event Handling:**
+- ✅ **Familiar**: Traditional approach developers know
+- ✅ **Simple for basic cases**: Inline onclick works for simple scripts
+- ✅ **Direct DOM access**: No abstraction layer
+- ✅ **Return false works**: Can prevent default with return value
+
+**Cons of HTML/JS Event Handling:**
+- ❌ **Browser inconsistencies**: Different event objects across browsers
+- ❌ **Performance issues**: Listener on every element
+- ❌ **Memory leaks**: Manual cleanup required
+- ❌ **Mixing concerns**: JavaScript in HTML strings
+- ❌ **Hard to maintain**: String-based handlers difficult to refactor
+- ❌ **No type checking**: Prone to runtime errors
+
+---
+
+### 6️⃣ **Use Cases in Project/Application**
+
+**1. Form Submissions:**
+
+```jsx
+function ContactForm() {
+  const [formData, setFormData] = useState({ name: '', email: '' });
+  const [loading, setLoading] = useState(false);
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // ✅ Prevent page reload
+    setLoading(true);
+    
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        body: JSON.stringify(formData)
+      });
+      alert('Message sent!');
+    } catch (error) {
+      alert('Error sending message');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Form fields */}
+      <button type="submit" disabled={loading}>
+        {loading ? 'Sending...' : 'Send'}
+      </button>
+    </form>
+  );
+}
+```
+**Use Case**: Contact forms, login, registration, checkout
+
+**2. Interactive UI Elements:**
+
+```jsx
+function Dropdown() {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const handleToggle = (e) => {
+    e.stopPropagation(); // Prevent bubbling
+    setIsOpen(!isOpen);
+  };
+  
+  const handleClickOutside = () => {
+    setIsOpen(false);
+  };
+  
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('click', handleClickOutside);
+      return () => document.removeEventListener('click', handleClickOutside);
+    }
+  }, [isOpen]);
+  
+  return (
+    <div>
+      <button onClick={handleToggle}>Toggle Menu</button>
+      {isOpen && <ul>{/* menu items */}</ul>}
+    </div>
+  );
+}
+```
+**Use Case**: Dropdowns, modals, tooltips, menus
+
+**3. Search & Filter:**
+
+```jsx
+function SearchableList({ items }) {
+  const [query, setQuery] = useState('');
+  
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
+  };
+  
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape') {
+      setQuery('');
+    }
+  };
+  
+  const filtered = items.filter(item =>
+    item.toLowerCase().includes(query.toLowerCase())
+  );
+  
+  return (
+    <div>
+      <input
+        type="text"
+        value={query}
+        onChange={handleSearch}
+        onKeyDown={handleKeyDown}
+        placeholder="Search... (Esc to clear)"
+      />
+      <ul>
+        {filtered.map((item, i) => <li key={i}>{item}</li>)}
+      </ul>
+    </div>
+  );
+}
+```
+**Use Case**: Search bars, filters, autocomplete
+
+**4. Drag & Drop:**
+
+```jsx
+function DraggableItem({ item }) {
+  const handleDragStart = (e) => {
+    e.dataTransfer.setData('text/plain', item.id);
+  };
+  
+  const handleDragOver = (e) => {
+    e.preventDefault(); // Allow drop
+  };
+  
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const draggedId = e.dataTransfer.getData('text/plain');
+    console.log('Dropped:', draggedId, 'onto:', item.id);
+  };
+  
+  return (
+    <div
+      draggable
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
+      {item.name}
+    </div>
+  );
+}
+```
+**Use Case**: Kanban boards, file uploads, reordering lists
+
+**5. Click Outside Detection:**
+
+```jsx
+function Modal({ isOpen, onClose, children }) {
+  const modalRef = useRef();
+  
+  const handleClickOutside = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      onClose();
+    }
+  };
+  
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isOpen]);
+  
+  if (!isOpen) return null;
+  
+  return (
+    <div className="modal-overlay">
+      <div ref={modalRef} className="modal-content">
+        {children}
+      </div>
+    </div>
+  );
+}
+```
+**Use Case**: Modals, dropdowns, popups, context menus
+
+**6. Debounced Input:**
+
+```jsx
+function DebouncedSearch() {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (query) {
+        fetch(`/api/search?q=${query}`)
+          .then(res => res.json())
+          .then(setResults);
+      }
+    }, 500); // Debounce 500ms
+    
+    return () => clearTimeout(timer);
+  }, [query]);
+  
+  const handleChange = (e) => {
+    setQuery(e.target.value);
+  };
+  
+  return (
+    <div>
+      <input onChange={handleChange} placeholder="Search..." />
+      <ul>
+        {results.map(r => <li key={r.id}>{r.name}</li>)}
+      </ul>
+    </div>
+  );
+}
+```
+**Use Case**: Live search, autocomplete, API calls on typing
+
+**7. File Upload:**
+
+```jsx
+function FileUploader() {
+  const [file, setFile] = useState(null);
+  
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+  
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+  
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const droppedFile = e.dataTransfer.files[0];
+    setFile(droppedFile);
+  };
+  
+  const handleUpload = async () => {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    await fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    });
+  };
+  
+  return (
+    <div onDrop={handleDrop} onDragOver={handleDragOver}>
+      <input type="file" onChange={handleFileChange} />
+      {file && <button onClick={handleUpload}>Upload</button>}
+    </div>
+  );
+}
+```
+**Use Case**: File uploads, image galleries, document management
+
+**8. Keyboard Shortcuts:**
+
+```jsx
+function KeyboardShortcuts() {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Ctrl+S to save
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        console.log('Saving...');
+      }
+      
+      // Ctrl+P to print
+      if (e.ctrlKey && e.key === 'p') {
+        e.preventDefault();
+        console.log('Printing...');
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+  
+  return <div>Press Ctrl+S to save, Ctrl+P to print</div>;
+}
+```
+**Use Case**: Editor shortcuts, accessibility, power user features
+
+---
+
+### 7️⃣ **Detailed Explanation**
+
+React's approach to event handling represents a fundamental departure from traditional HTML/JavaScript patterns, introducing **SyntheticEvents** and **event delegation** to solve cross-browser inconsistencies and performance issues inherent in native DOM event handling. Understanding these differences is crucial for React developers because event handling is one of the most frequent interactions between user code and React's internal systems.
+
+In traditional **HTML/JavaScript**, events are attached directly to DOM elements using lowercase attribute names like `onclick`, `onchange`, or `onsubmit`. You can either use inline string handlers (`<button onclick="handleClick()">`) or attach listeners programmatically via `addEventListener`. Each element that needs to respond to events gets its own listener, which can create **memory overhead** in applications with many interactive elements. Additionally, different browsers historically implemented event objects differently, requiring developers to write **browser-specific workarounds** to handle inconsistencies in properties like `event.target` vs `event.srcElement` or differences in how event propagation worked.
+
+React solves these problems through **SyntheticEvents** – a cross-browser wrapper around the native browser event. When you attach an event handler in React using JSX (e.g., `onClick={handleClick}`), React doesn't actually attach a listener to that specific DOM element. Instead, React uses **event delegation**: it attaches a single event listener at the **root of your application** (in React 17+, this is the root container; in React <17, it was the document). When an event occurs anywhere in your component tree, it bubbles up to this root listener, and React determines which component handler should execute based on the event's target and the virtual DOM structure.
+
+The **naming convention** differs from HTML because JSX is JavaScript, not HTML markup. JavaScript typically uses **camelCase** for properties and methods, so React follows this convention: `onClick`, `onChange`, `onSubmit`, `onMouseEnter`, etc. This isn't just stylistic – it's necessary because JSX transpiles to JavaScript function calls, and property names must be valid JavaScript identifiers. Using `onclick` (lowercase) would work syntactically but violates React's conventions and could be confused with the native DOM property.
+
+A critical syntactic difference is that React requires **function references**, not string handlers. In JSX, you write `onClick={handleClick}` (passing the function itself), not `onClick="handleClick()"` (a string). This is because JSX expressions in curly braces evaluate to JavaScript values, and you're assigning the function reference to the `onClick` property. If you wrote `onClick={handleClick()}`, you'd be **calling the function immediately** during render and assigning its return value to onClick, which is rarely what you want. This is a common beginner mistake that causes functions to execute on render rather than on click.
+
+The **SyntheticEvent** object React passes to your handler looks and behaves like a native event but is actually a normalized wrapper. It has all the standard event properties (`type`, `target`, `currentTarget`, `preventDefault`, `stopPropagation`) and methods, but these are guaranteed to work consistently across browsers. Under the hood, React pools these event objects for performance – in React versions before 17, after your event handler executed, React would **nullify all properties** on the SyntheticEvent and return it to a pool for reuse. This meant if you tried to access event properties **asynchronously** (in a setTimeout or Promise), they'd be null. You had to call `e.persist()` to opt out of pooling. **React 17 removed event pooling**, so this is no longer an issue, and you can access events asynchronously without special handling.
+
+**Preventing default behavior** works differently than in traditional JavaScript. In HTML/jQuery, you can prevent default actions by returning `false` from an event handler: `<form onsubmit="return false">`. This doesn't work in React. You **must explicitly call `e.preventDefault()`** in your handler. Returning false does nothing. This is intentional – React wants explicit control flow, and implicit behavior like `return false` preventing defaults is considered a footgun.
+
+**Event propagation** (bubbling and capturing) works the same conceptually as in native DOM, but it happens through React's **synthetic event system**. When you click a button inside a div, the click event bubbles from the button up through its parent elements in the React component tree. You can stop this with `e.stopPropagation()`. The difference is that React's event delegation means the actual DOM event has already bubbled to the root; React is re-creating the bubbling behavior virtually through its component hierarchy.
+
+**Class components** introduce the infamous **`this` binding problem**. In JavaScript classes, methods aren't automatically bound to the instance. If you pass `this.handleClick` to an event handler, when React calls that function, `this` will be undefined (in strict mode) because the function is called without context. You must either **bind in the constructor** (`this.handleClick = this.handleClick.bind(this)`), use an **arrow function property** (`handleClick = () => {...}`), or use an **inline arrow function** in JSX (`onClick={() => this.handleClick()}`). Functional components with hooks eliminate this entirely because they don't use `this` – they rely on closures instead.
+
+**Passing parameters** to event handlers requires care. You can't write `onClick={handleClick(param)}` because that calls the function immediately. Instead, use a **wrapper arrow function**: `onClick={(e) => handleClick(param, e)}` or a **curried function**: `onClick={handleClick(param)}` where `handleClick` returns a function. Both approaches work, but arrow functions in JSX create a new function on every render, which can cause performance issues with `React.memo` or `PureComponent` if the child component checks prop equality by reference.
+
+**React 17** made significant changes to event delegation. Previously, React attached event listeners to the `document` object, which could cause issues with multiple React roots on the same page or when integrating React into non-React applications. React 17 changed event attachment to the **root container** where you called `ReactDOM.render()`. This makes it safer to have multiple React apps on the same page and simplifies integration scenarios. React 17 also removed event pooling entirely, simplifying async event access.
+
+**Performance benefits** of React's approach are significant. Instead of attaching hundreds or thousands of individual event listeners (one per interactive element), React attaches a single listener at the root. This reduces **memory footprint** and speeds up initial rendering and cleanup. When components unmount, their event handlers don't need individual cleanup – they simply disappear from the virtual DOM, and React's root listener handles the rest.
+
+**Type safety** is easier with React events because TypeScript can infer or validate event types. When you write `const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {...}`, TypeScript knows the event type and target element type, providing autocomplete and catching errors at compile time. This is much harder with string-based event handlers in traditional HTML.
+
+The **declarative nature** of React event handling aligns with React's overall philosophy. Event handlers are declared right in the JSX alongside the elements they affect, making the relationship explicit. You can see at a glance that this button calls this function, rather than hunting through JavaScript files for `addEventListener` calls scattered across your codebase. This co-location improves maintainability and makes components self-contained.
+
+**Testing** is simpler because you're working with function references. You can easily simulate events in tests using React Testing Library's `fireEvent` or user-event, which trigger your handlers just like real user interactions would. With traditional DOM event listeners, you'd need to manually create and dispatch events or find elements by selectors, which is more brittle and implementation-dependent.
+
+Understanding React's event system is essential not just for writing event handlers but for understanding React's performance optimizations, the relationship between JSX and the DOM, and how React maintains its virtual representation of the UI. The abstraction layer might seem unnecessary at first, but it provides consistency, performance, and developer experience improvements that pay off significantly in real-world applications.
+
+---
+
+**🔑 Key Takeaway:** React uses **SyntheticEvents** (cross-browser wrappers) with **camelCase naming** (`onClick`, not `onclick`) and requires **function references** (`{handleClick}`, not `"handleClick()"`). React implements **event delegation** at the root level for better performance, requires **explicit `e.preventDefault()`** (can't return false), and provides **consistent API** across browsers. **React 17+** removed event pooling and attached events to the root container instead of document. Use **arrow functions or binding** to preserve `this` in class components, but **functional components with hooks** eliminate this complexity entirely. React's approach improves performance, cross-browser consistency, and developer experience over traditional HTML/JS event handling.
+
+---
+
+
 35. Can multiple components share the same state? If yes, how?
 
 ---
